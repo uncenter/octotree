@@ -80,7 +80,7 @@ export async function urlToTree(url: string) {
         try {
             sha = await getTreeSha(owner, repo, "main");
         } catch (err: any) {
-            return err.message;
+            return "Could not fetch tree: branch not found";
         }
     }
     const tree = await getTree(owner, repo, sha);
