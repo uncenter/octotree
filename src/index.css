@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #fff;
+    color: #18181b;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #18181b;
+        color: #fff;
+    }
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+textarea:disabled {
+    font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New,
+        monospace;
+}
+
+.btn {
+    border-radius: 0.5rem;
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    text-align: center;
+    border-width: 1px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn.outline.gray {
+    color: #111827;
+    border-color: #1f2937;
+}
+
+.btn.outline.gray:hover {
+    background-color: #111827;
+    color: #ffffff;
+}
+
+.btn.outline.blue {
+    color: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+.btn.outline.blue:hover {
+    background-color: #1e40af;
+    color: #ffffff;
+}
+
+.btn.outline.green {
+    color: #047857;
+    border-color: #047857;
+}
+
+.btn.outline.green:hover {
+    background-color: #065f46;
+    color: #ffffff;
+}
+
+.btn.outline.red {
+    color: #b91c1c;
+    border-color: #dc2626;
+}
+
+.btn.outline.red:hover {
+    background-color: #991b1b;
+    color: #ffffff;
+}
+
+.btn.outline.yellow {
+    color: #fbbf24;
+    border-color: #fbbf24;
+}
+
+.btn.outline.yellow:hover {
+    background-color: #f59e0b;
+    color: #ffffff;
+}
+
+.btn.outline.purple {
+    color: #6d28d9;
+    border-color: #6d28d9;
+}
+
+.btn.outline.purple:hover {
+    background-color: #5b21b6;
+    color: #ffffff;
+}
+
+.btn.solid {
+    color: #ffffff;
+    border-color: transparent;
+}
+
+.btn.solid.gray {
+    background-color: #1f2937;
+}
+
+.btn.solid.gray:hover {
+    background-color: #111827;
+}
+
+.btn.solid.blue {
+    background-color: #1d4ed8;
+}
+
+.btn.solid.blue:hover {
+    background-color: #1e40af;
+}
+
+.btn.solid.green {
+    background-color: #047857;
+}
+
+.btn.solid.green:hover {
+    background-color: #065f46;
+}
+
+.btn.solid.red {
+    background-color: #b91c1c;
+}
+
+.btn.solid.red:hover {
+    background-color: #991b1b;
+}
+
+.btn.solid.yellow {
+    background-color: #fbbf24;
+}
+
+.btn.solid.yellow:hover {
+    background-color: #f59e0b;
+}
+
+.btn.solid.purpled {
+    background-color: #6d28d9;
+}
+
+.btn.solid.purple:hover {
+    background-color: #5b21b6;
+}
+
+.clipboard.icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: none;
+    cursor: pointer;
+}
