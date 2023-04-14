@@ -30,7 +30,15 @@ export default function Root() {
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
+                <Meta name="color-scheme" content="light" />
                 <Link rel="icon" type="image/svg+xml" href="favicon.svg" />
+                <script
+                    async
+                    defer
+                    data-website-id="5fdeff0b-1326-478c-b06a-e03694f60553"
+                    data-domains="tree.uncenter.org"
+                    src="https://stats.uncenter.org/beepboop.js"
+                ></script>
             </Head>
             <Body>
                 <Suspense>
