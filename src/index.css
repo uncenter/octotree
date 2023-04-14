@@ -158,11 +158,3 @@ textarea:disabled {
 .btn.solid.purple:hover {
     background-color: #5b21b6;
 }
-
-.clipboard.icon {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    border: none;
-    cursor: pointer;
-}

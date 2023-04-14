@@ -35,7 +35,6 @@ const App: Component = () => {
                             value={url() as string}
                             onInput={(e) => {
                                 setUrl(e.target.value);
-                                localStorage.setItem("url", e.target.value);
                             }}
                         />
                         <Input.Description class="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -60,8 +59,8 @@ const App: Component = () => {
                                 value={tree() as string}
                             ></Input.TextArea>
                             <Button.Root
-                                class="clipboard icon"
-                                onClick={() => {
+                                class="hover:scale-110 absolute right-2 top-2 transition-transform duration-200"
+                                onClick={(e) => {
                                     navigator.clipboard.writeText(
                                         tree() as string
                                     );
