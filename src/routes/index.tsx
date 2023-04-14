@@ -53,14 +53,14 @@ export default function App() {
                                 name="url"
                                 placeholder="uncenter/octotree"
                             />
-                            <Input.Description class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                            <Input.Description class="text-sm text-gray-500 dark:text-gray-400 mt-4 break-words">
                                 <p>
                                     Enter the path to a Github repository using
                                     one of the following syntaxes. For both, it
                                     defaults to checking the main and master
                                     branches.
                                 </p>
-                                <ul class="list-disc">
+                                <ul class="list-disc ml-4">
                                     <li class="mt-1">
                                         <p>
                                             Shortened path syntax:
