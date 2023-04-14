@@ -71,21 +71,49 @@ async function getTree(owner: string, repo: string, sha: string) {
 }
 
 export async function urlToTree(url: string) {
-    if (url === "") return "";
-    let match = url.match(/^(?:github\.com\/)?([^/]+)\/([^/]+)$/);
-    if (!match) return "Invalid URL.";
-    const [owner, repo] = match.slice(1);
+    function getOwnerAndRepo(
+        url: string
+    ): [string, string, string | null] | string {
+        let match = url.match(
+            /^(?:https?:\/\/)?github\.com\/([^/]+)\/([^/]+)(?:\/tree\/([^/]+))?$/
+        );
+        if (match) {
+            return [match[1], match[2], match[3]];
+        }
+        match = url.match(/^([^/]+)\/([^/#]+)(?:#(.+))?$/);
+        if (match) {
+            return [match[1], match[2], match[3]];
+        }
+        return "Invalid URL";
+    }
+
+    const [owner, repo, branch] = getOwnerAndRepo(url);
     let sha;
-    try {
-        sha = await getTreeSha(owner, repo, "master");
-    } catch (err) {
+    if (branch === undefined) {
         try {
-            sha = await getTreeSha(owner, repo, "main");
+            sha = await getTreeSha(owner as string, repo as string, "main");
+        } catch (err) {
+            try {
+                sha = await getTreeSha(
+                    owner as string,
+                    repo as string,
+                    "master"
+                );
+            } catch (err: any) {
+                return "Repository not found or does not have 'main' or 'master' branch. Please specify a branch.";
+            }
+        }
+    } else {
+        try {
+            sha = await getTreeSha(
+                owner as string,
+                repo as string,
+                branch as string
+            );
         } catch (err: any) {
-            console.error(err);
-            return "Repository not found.";
+            return "Branch not found.";
         }
     }
-    const tree = await getTree(owner, repo, sha);
+    const tree = await getTree(owner as string, repo as string, sha as string);
     return buildAsciiTree(JSON.stringify(tree));
 }

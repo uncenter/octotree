@@ -14,7 +14,7 @@ export default function App() {
     return (
         <div class="container mx-auto flex flex-col">
             <div class="m-6 flex flex-col items-center">
-                <div class="flex flex-row justify-between w-full mb-6 align-middle">
+                <div class="flex flex-row justify-around w-full mb-6">
                     <div class="flex flex-row items-center">
                         <svg
                             class="h-10 rounded-full mr-2"
@@ -53,10 +53,42 @@ export default function App() {
                                 name="url"
                                 placeholder="uncenter/octotree"
                             />
-                            <Input.Description class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                Enter the path to a Github repository (e.g.
-                                uncenter/octotree). You can also paste the full
-                                URL to a repository, as long as it's on Github.
+                            <Input.Description class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                                <p>
+                                    Enter the path to a Github repository using
+                                    one of the following syntaxes. For both, it
+                                    defaults to checking the main and master
+                                    branches.
+                                </p>
+                                <ul class="list-disc">
+                                    <li class="mt-1">
+                                        <p>
+                                            Shortened path syntax:
+                                            <code>:owner/:repo</code>. You can
+                                            optionally specify a branch by
+                                            adding #branch to the end of the
+                                            path (e.g.
+                                            <code>:owner/:repo#:branch</code>).
+                                        </p>
+                                    </li>
+                                    <li class="mt-1">
+                                        <p>
+                                            Full URL syntax (useful for copy and
+                                            pasting directly from Github):
+                                            <code>
+                                                https://github.com/:owner/:repo
+                                            </code>
+                                            . You can specify a branch by adding
+                                            /tree/branch-name to the end of the
+                                            URL (e.g.
+                                            <code>
+                                                https://github.com/:owner/:repo/tree/:branch
+                                            </code>
+                                            ), which is the same as Github's URL
+                                            syntax.
+                                        </p>
+                                    </li>
+                                </ul>
                             </Input.Description>
                         </Input.Root>
                         <Button.Root

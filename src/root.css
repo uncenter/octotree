@@ -23,6 +23,17 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
+    background-color: #22272f;
+    border-radius: 0.3em;
+    color: #d8dee9;
+    padding: 0.1em 0.2em;
+    white-space: normal;
+    margin-left: 0.2em;
+}
+
+pre {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
 }
 
 textarea:disabled {
