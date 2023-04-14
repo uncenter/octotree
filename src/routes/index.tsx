@@ -108,7 +108,7 @@ export default function App() {
                             class="hover:scale-110 absolute right-2 top-2 transition-transform duration-200"
                             onClick={() => {
                                 navigator.clipboard.writeText(
-                                    JSON.stringify(tree.result, null, 2)
+                                    tree.result || ""
                                 );
                             }}
                         >
@@ -126,7 +126,6 @@ export default function App() {
                     </div>
                 </div>
             </div>
-            <div class="lg:w-1/2"></div>
         </div>
     );
 }
