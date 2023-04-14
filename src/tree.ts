@@ -86,6 +86,9 @@ export async function urlToTree(url: string) {
         }
         return "Invalid URL";
     }
+    if (url === "") {
+        return "Please enter a path or URL.";
+    }
 
     const [owner, repo, branch] = getOwnerAndRepo(url);
     let sha;
