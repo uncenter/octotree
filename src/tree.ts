@@ -72,8 +72,7 @@ async function getTree(owner: string, repo: string, sha: string) {
 
 export async function urlToTree(url: string) {
     if (url === "") return "";
-    let match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
-    if (!match) match = url.match(/^([^/]+)\/([^/]+)/);
+    let match = url.match(/^(?:github\.com\/)?([^/]+)\/([^/]+)$/);
     if (!match) return "Invalid URL.";
     const [owner, repo] = match.slice(1);
     let sha;
