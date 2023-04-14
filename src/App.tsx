@@ -27,7 +27,7 @@ const App: Component = () => {
                 <div class="flex flex-col items-center w-full">
                     <Input.Root class="mt-3 lg:w-3/4 w-full">
                         <Input.Label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Github URL
+                            Github URL / Path
                         </Input.Label>
                         <Input.Input
                             type="text"
@@ -38,6 +38,11 @@ const App: Component = () => {
                                 localStorage.setItem("url", e.target.value);
                             }}
                         />
+                        <Input.Description class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            Paste a Github URL (e.g.
+                            github.com/uncenter/octotree) or enter a path (e.g.
+                            uncenter/octotree).
+                        </Input.Description>
                     </Input.Root>
                     <Button.Root
                         class="btn outline green mt-6"
@@ -64,7 +69,7 @@ const App: Component = () => {
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    stroke="currentColor"
+                                    class="fill-current"
                                     width="1em"
                                     height="1em"
                                     stroke-width="0"

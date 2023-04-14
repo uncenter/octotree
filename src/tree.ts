@@ -52,26 +52,29 @@ async function getTreeSha(owner: string, repo: string, branch: string) {
     )
         .catch((err) => {
             console.error(err);
-            return null;
+            return err;
         })
         .then((res) => res?.json());
-    if (!data) {
-        throw new Error("Could not fetch branch");
-    }
     return data.commit.sha;
 }
 
 async function getTree(owner: string, repo: string, sha: string) {
     const data = await fetch(
         `https://api.github.com/repos/${owner}/${repo}/git/trees/${sha}?recursive=1`
-    ).then((res) => res.json());
+    )
+        .catch((err) => {
+            console.error(err);
+            return err;
+        })
+        .then((res) => res.json());
     return data.tree;
 }
 
 export async function urlToTree(url: string) {
     if (url === "") return "";
-    const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
-    if (!match) return "";
+    let match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
+    if (!match) match = url.match(/^([^/]+)\/([^/]+)/);
+    if (!match) return "Invalid URL.";
     const [owner, repo] = match.slice(1);
     let sha;
     try {
@@ -80,7 +83,8 @@ export async function urlToTree(url: string) {
         try {
             sha = await getTreeSha(owner, repo, "main");
         } catch (err: any) {
-            return "Could not fetch tree: branch not found";
+            console.error(err);
+            return "Repository not found.";
         }
     }
     const tree = await getTree(owner, repo, sha);
