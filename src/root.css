@@ -36,9 +36,14 @@ pre {
         monospace;
 }
 
-textarea:disabled {
-    font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New,
-        monospace;
+a {
+    color: #1d4ed8;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 .btn {
