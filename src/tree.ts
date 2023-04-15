@@ -1,4 +1,5 @@
 const FILE_PREFIX = "├── ";
+const LAST_FILE_PREFIX = "└── ";
 const FOLDER_SUFFIX = "/";
 const INDENT_PREFIX = "│   ";
 const ROOT_PREFIX = "";
@@ -25,19 +26,28 @@ function buildAsciiTree(json: string) {
 
     function asciiTree(obj: any, level: number) {
         let result = "";
-        let PRE;
-        if (level === 0) {
-            PRE = ROOT_PREFIX;
-        } else {
-            PRE = INDENT_PREFIX.repeat(level - 1) + FILE_PREFIX;
+        function getPrefix(level: number, isLast: boolean) {
+            if (level === 0) {
+                return ROOT_PREFIX;
+            }
+            if (isLast) {
+                return INDENT_PREFIX.repeat(level - 1) + LAST_FILE_PREFIX;
+            }
+            return INDENT_PREFIX.repeat(level - 1) + FILE_PREFIX;
         }
 
         for (const key in obj) {
+            let isLast;
+            if (obj[key] === Object.keys(obj).pop()) {
+                isLast = true;
+            } else {
+                isLast = false;
+            }
             if (obj[key] instanceof Object) {
-                result += `${PRE}${key}${FOLDER_SUFFIX}\n`;
+                result += `${getPrefix(level, isLast)}${key}${FOLDER_SUFFIX}\n`;
                 result += asciiTree(obj[key], level + 1);
             } else {
-                result += `${PRE}${obj[key]}\n`;
+                result += `${getPrefix(level, isLast)}${obj[key]}\n`;
             }
         }
 
