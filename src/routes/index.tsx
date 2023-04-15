@@ -74,6 +74,7 @@ export default function App() {
                     </Show>
                 </pre>
                 <Button.Root
+                    aria-label="Copy to clipboard"
                     class="hover:scale-110 absolute right-2 top-2 transition-transform duration-200"
                     onClick={() => {
                         navigator.clipboard.writeText(tree.result || "");
