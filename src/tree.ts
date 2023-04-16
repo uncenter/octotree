@@ -160,7 +160,7 @@ export async function urlToTree(url: string, config: any = {}) {
         }
     }
     const tree = await getTree(owner as string, repo as string, sha as string);
-    if (!isServer && config.cache === true) {
+    if (!isServer) {
         localStorage.setItem(
             `${owner}/${repo}#${branch}`,
             JSON.stringify(createTreeObject(JSON.stringify(tree)))

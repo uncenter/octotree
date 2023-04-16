@@ -87,7 +87,7 @@ export default function App() {
                         class="mt-3 inline-flex items-center"
                     >
                         <Switch.Label class="text-sm font-medium text-gray-900 dark:text-white">
-                            Cache
+                            Use Cache
                         </Switch.Label>
                         <Switch.Input type="checkbox" name="cache" />
                         <Switch.Control class="ml-2 inline-flex items-center h-6 w-11 border border-zinc-300 bg-zinc-200 transition-[250ms] duration-[background-color] px-0.5 py-0 rounded-xl border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)] cursor-pointer">
