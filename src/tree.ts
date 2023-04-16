@@ -1,10 +1,4 @@
-const FILE_PREFIX = "├── ";
-const LAST_FILE_PREFIX = "└── ";
-const FOLDER_SUFFIX = "/";
-const INDENT_PREFIX = "│   ";
-const ROOT_PREFIX = "";
-
-function buildAsciiTree(json: string) {
+function createTreeObject(json: string) {
     const hierarchicalObj: any = {};
 
     const data = JSON.parse(json);
@@ -23,14 +17,23 @@ function buildAsciiTree(json: string) {
             currentObj[pathArr[pathArr.length - 1]] = obj.path.split("/").pop();
         }
     }
+    return hierarchicalObj;
+}
 
-    function asciiTree(obj: any, level: number) {
+function buildAsciiTree(treeObj: Object, config: any = {}) {
+    const FILE_PREFIX = "├── ";
+    const LAST_FILE_PREFIX = "└── ";
+    const FOLDER_SUFFIX = "/";
+    const INDENT_PREFIX = "│   ";
+    const ROOT_PREFIX = "";
+
+    function asciiTree(obj: any, level: number, config: any) {
         let result = "";
         function getPrefix(level: number, isLast: boolean) {
             if (level === 0) {
                 return ROOT_PREFIX;
             }
-            if (isLast) {
+            if (isLast && config.roundLast === true) {
                 return INDENT_PREFIX.repeat(level - 1) + LAST_FILE_PREFIX;
             }
             return INDENT_PREFIX.repeat(level - 1) + FILE_PREFIX;
@@ -45,7 +48,7 @@ function buildAsciiTree(json: string) {
             }
             if (obj[key] instanceof Object) {
                 result += `${getPrefix(level, isLast)}${key}${FOLDER_SUFFIX}\n`;
-                result += asciiTree(obj[key], level + 1);
+                result += asciiTree(obj[key], level + 1, config);
             } else {
                 result += `${getPrefix(level, isLast)}${obj[key]}\n`;
             }
@@ -53,7 +56,10 @@ function buildAsciiTree(json: string) {
 
         return result;
     }
-    return asciiTree(hierarchicalObj, 0);
+    if (config.rootDir === true) {
+        treeObj = { ".": treeObj };
+    }
+    return asciiTree(treeObj, 0, config);
 }
 
 async function getTreeSha(owner: string, repo: string, branch: string) {
@@ -80,10 +86,8 @@ async function getTree(owner: string, repo: string, sha: string) {
     return data.tree;
 }
 
-export async function urlToTree(url: string) {
-    function getOwnerAndRepo(
-        url: string
-    ): [string, string, string | null] | string {
+export async function urlToTree(url: string, config: any = {}) {
+    function parseUrl(url: string) {
         let match = url.match(
             /^(?:https?:\/\/)?github\.com\/([^/]+)\/([^/]+)(?:\/tree\/([^/]+))?$/
         );
@@ -100,7 +104,7 @@ export async function urlToTree(url: string) {
         return "Please enter a path or URL.";
     }
 
-    const [owner, repo, branch] = getOwnerAndRepo(url);
+    const [owner, repo, branch] = parseUrl(url);
     let sha;
     if (branch === undefined) {
         try {
@@ -128,5 +132,5 @@ export async function urlToTree(url: string) {
         }
     }
     const tree = await getTree(owner as string, repo as string, sha as string);
-    return buildAsciiTree(JSON.stringify(tree));
+    return buildAsciiTree(createTreeObject(JSON.stringify(tree)), config);
 }
