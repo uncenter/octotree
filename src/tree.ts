@@ -107,9 +107,29 @@ export async function urlToTree(url: string, config: any = {}) {
     }
 
     const [owner, repo, branch] = parseUrl(url);
-    if (!isServer) {
+    if (!isServer && config.cache === true) {
         if (localStorage.getItem(`${owner}/${repo}#${branch}`)) {
-            return localStorage.getItem(`${owner}/${repo}#${branch}`);
+            if (
+                new Date(
+                    localStorage.getItem(
+                        `${owner}/${repo}#${branch}!expires`
+                    ) as string
+                ) > new Date()
+            ) {
+                console.log("Using cached tree...");
+                return buildAsciiTree(
+                    JSON.parse(
+                        localStorage.getItem(
+                            `${owner}/${repo}#${branch}`
+                        ) as string
+                    ),
+                    config
+                );
+            } else {
+                console.log("Cache expired, fetching tree...");
+                localStorage.removeItem(`${owner}/${repo}#${branch}`);
+                localStorage.removeItem(`${owner}/${repo}#${branch}!expires`);
+            }
         }
     }
     let sha;
@@ -140,10 +160,14 @@ export async function urlToTree(url: string, config: any = {}) {
         }
     }
     const tree = await getTree(owner as string, repo as string, sha as string);
-    if (!isServer) {
+    if (!isServer && config.cache === true) {
         localStorage.setItem(
             `${owner}/${repo}#${branch}`,
-            buildAsciiTree(createTreeObject(JSON.stringify(tree)), config)
+            JSON.stringify(createTreeObject(JSON.stringify(tree)))
+        );
+        localStorage.setItem(
+            `${owner}/${repo}#${branch}!expires`,
+            new Date(Date.now() + 1000 * 60 * 60).toString()
         );
     }
     return buildAsciiTree(createTreeObject(JSON.stringify(tree)), config);
