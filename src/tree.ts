@@ -1,3 +1,5 @@
+import { isServer } from "solid-js/web";
+
 function createTreeObject(json: string) {
     const hierarchicalObj: any = {};
 
@@ -105,7 +107,13 @@ export async function urlToTree(url: string, config: any = {}) {
     }
 
     const [owner, repo, branch] = parseUrl(url);
+    if (!isServer) {
+        if (localStorage.getItem(`${owner}/${repo}#${branch}`)) {
+            return localStorage.getItem(`${owner}/${repo}#${branch}`);
+        }
+    }
     let sha;
+    console.log("Fetching tree...");
     if (branch === undefined) {
         try {
             sha = await getTreeSha(owner as string, repo as string, "main");
@@ -132,5 +140,11 @@ export async function urlToTree(url: string, config: any = {}) {
         }
     }
     const tree = await getTree(owner as string, repo as string, sha as string);
+    if (!isServer) {
+        localStorage.setItem(
+            `${owner}/${repo}#${branch}`,
+            buildAsciiTree(createTreeObject(JSON.stringify(tree)), config)
+        );
+    }
     return buildAsciiTree(createTreeObject(JSON.stringify(tree)), config);
 }
