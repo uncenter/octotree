@@ -22,6 +22,29 @@ function createTreeObject(json: string) {
     return hierarchicalObj;
 }
 
+function sortTreeByFileType(treeObj: any) {
+    console.log(treeObj);
+    const sortedTreeObj: any = {};
+    const folders: any = [];
+    const files: any = [];
+    for (const key in treeObj) {
+        if (treeObj[key] instanceof Object) {
+            folders.push(key);
+        } else {
+            files.push(key);
+        }
+    }
+    folders.sort();
+    files.sort();
+    for (const folder of folders) {
+        sortedTreeObj[folder] = treeObj[folder];
+    }
+    for (const file of files) {
+        sortedTreeObj[file] = treeObj[file];
+    }
+    return sortedTreeObj;
+}
+
 function buildAsciiTree(treeObj: Object, config: any = {}) {
     const FILE_PREFIX = "├── ";
     const LAST_FILE_PREFIX = "└── ";
@@ -108,11 +131,11 @@ export async function urlToTree(url: string, config: any = {}) {
 
     const [owner, repo, branch] = parseUrl(url);
     if (!isServer && config.cache === true) {
-        if (localStorage.getItem(`${owner}/${repo}#${branch}`)) {
+        if (localStorage.getItem(`cache.${owner}/${repo}#${branch}`)) {
             if (
                 new Date(
                     localStorage.getItem(
-                        `${owner}/${repo}#${branch}!expires`
+                        `cache.expires.${owner}/${repo}#${branch}`
                     ) as string
                 ) > new Date()
             ) {
@@ -120,15 +143,17 @@ export async function urlToTree(url: string, config: any = {}) {
                 return buildAsciiTree(
                     JSON.parse(
                         localStorage.getItem(
-                            `${owner}/${repo}#${branch}`
+                            `cache.${owner}/${repo}#${branch}`
                         ) as string
                     ),
                     config
                 );
             } else {
                 console.log("Cache expired, fetching tree...");
-                localStorage.removeItem(`${owner}/${repo}#${branch}`);
-                localStorage.removeItem(`${owner}/${repo}#${branch}!expires`);
+                localStorage.removeItem(`cache.${owner}/${repo}#${branch}`);
+                localStorage.removeItem(
+                    `cache.expires.${owner}/${repo}#${branch}`
+                );
             }
         }
     }
@@ -162,11 +187,11 @@ export async function urlToTree(url: string, config: any = {}) {
     const tree = await getTree(owner as string, repo as string, sha as string);
     if (!isServer) {
         localStorage.setItem(
-            `${owner}/${repo}#${branch}`,
+            `cache.${owner}/${repo}#${branch}`,
             JSON.stringify(createTreeObject(JSON.stringify(tree)))
         );
         localStorage.setItem(
-            `${owner}/${repo}#${branch}!expires`,
+            `cache.expires.${owner}/${repo}#${branch}`,
             new Date(Date.now() + 1000 * 60 * 60).toString()
         );
     }
