@@ -1,7 +1,6 @@
 import { Show } from "solid-js";
 import { createRouteAction } from "solid-start/data";
-import { Button } from "@kobalte/core";
-import { TextField as Input } from "@kobalte/core";
+import { Button, Switch, TextField as Input } from "@kobalte/core";
 import { Page } from "~/components/Page";
 
 import { urlToTree } from "../tree";
@@ -9,7 +8,10 @@ import { urlToTree } from "../tree";
 export default function App() {
     const [tree, { Form }] = createRouteAction(
         async (formData: FormData) =>
-            await urlToTree(formData.get("url") as string)
+            await urlToTree(formData.get("url") as string, {
+                roundLast: formData.get("roundLast") === "on" ? true : false,
+                rootDir: formData.get("rootDir") === "on" ? true : false,
+            })
     );
 
     return (
@@ -60,6 +62,26 @@ export default function App() {
                         </ul>
                     </Input.Description>
                 </Input.Root>
+                <div class="flex flex-row items-center gap-4">
+                    <Switch.Root class="mt-3 inline-flex items-center">
+                        <Switch.Label class="text-sm font-medium text-gray-900 dark:text-white">
+                            Round Last
+                        </Switch.Label>
+                        <Switch.Input type="checkbox" name="roundLast" />
+                        <Switch.Control class="ml-2 inline-flex items-center h-6 w-11 border border-zinc-300 bg-zinc-200 transition-[250ms] duration-[background-color] px-0.5 py-0 rounded-xl border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)]">
+                            <Switch.Thumb class="h-5 w-5 bg-[white] transition-[250ms] duration-[transform] rounded-[10px] data-[checked]:translate-x-[1.2em] -translate-x-[0.1em]"></Switch.Thumb>
+                        </Switch.Control>
+                    </Switch.Root>
+                    <Switch.Root class="mt-3 inline-flex items-center">
+                        <Switch.Label class="text-sm font-medium text-gray-900 dark:text-white">
+                            Root Directory
+                        </Switch.Label>
+                        <Switch.Input type="checkbox" name="rootDir" />
+                        <Switch.Control class="ml-2 inline-flex items-center h-6 w-11 border border-zinc-300 bg-zinc-200 transition-[250ms] duration-[background-color] px-0.5 py-0 rounded-xl border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)]">
+                            <Switch.Thumb class="h-5 w-5 bg-[white] transition-[250ms] duration-[transform] rounded-[10px] data-[checked]:translate-x-[1.2em] -translate-x-[0.1em]"></Switch.Thumb>
+                        </Switch.Control>
+                    </Switch.Root>
+                </div>
                 <Button.Root
                     type="submit"
                     class="btn outline green mt-6 justify-center"
