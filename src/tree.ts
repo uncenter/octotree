@@ -123,13 +123,15 @@ export async function urlToTree(url: string, config: any = {}) {
         if (match) {
             return [match[1], match[2], match[3]];
         }
-        return "Invalid URL";
+        return [];
     }
     if (url === "") {
         return "Please enter a path or URL.";
     }
-
-    const [owner, repo, branch] = parseUrl(url);
+    let [owner, repo, branch] = parseUrl(url);
+    if (!owner || !repo) {
+        return `Invalid path or URL "${url}". Please enter a valid path or URL.`;
+    }
     if (!isServer && config.cache === true) {
         if (localStorage.getItem(`cache.${owner}/${repo}#${branch}`)) {
             if (
@@ -162,6 +164,7 @@ export async function urlToTree(url: string, config: any = {}) {
     if (branch === undefined) {
         try {
             sha = await getTreeSha(owner as string, repo as string, "main");
+            branch = "main";
         } catch (err) {
             try {
                 sha = await getTreeSha(
@@ -169,8 +172,9 @@ export async function urlToTree(url: string, config: any = {}) {
                     repo as string,
                     "master"
                 );
+                branch = "master";
             } catch (err: any) {
-                return "Repository not found or does not have 'main' or 'master' branch. Please specify a branch.";
+                return `Repository "${owner}/${repo}" not found. Please enter a valid path or URL.`;
             }
         }
     } else {
