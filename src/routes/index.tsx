@@ -4,8 +4,17 @@ import { Button, Switch, TextField as Input } from "@kobalte/core";
 import { Page } from "~/components/Page";
 
 import { urlToTree } from "../tree";
+import { isServer } from "solid-js/web";
+
+const version = "1.0.0";
 
 export default function App() {
+    if (!isServer) {
+        if (localStorage.getItem("version") !== version) {
+            localStorage.clear();
+        }
+        localStorage.setItem("version", version);
+    }
     const [tree, { Form }] = createRouteAction(
         async (formData: FormData) =>
             await urlToTree(formData.get("url") as string, {
