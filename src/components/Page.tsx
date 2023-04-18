@@ -15,7 +15,7 @@ export function Page({ children, footer = true }: PageProps) {
                             class="h-12 w-12"
                             alt="OctoTree Logo"
                         />
-                        <h1 class="text-3xl font-bold text-center">OctoTree</h1>
+                        <h1 class="text-3xl font-bold text-center">Octotree</h1>
                     </div>
                 </header>
                 <main class="flex flex-col items-center w-full">
@@ -23,10 +23,6 @@ export function Page({ children, footer = true }: PageProps) {
                 </main>
                 {footer && (
                     <footer class="mt-6">
-                        <p class="text-center">
-                            Made with ❤️ by{" "}
-                            <a href="https://uncenter.org">uncenter</a>
-                        </p>
                         <p class="text-center">
                             MIT licensed and{" "}
                             <a href="https://github.com/uncenter/octotree">

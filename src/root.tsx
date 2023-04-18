@@ -18,10 +18,10 @@ export default function Root() {
     return (
         <Html lang="en">
             <Head>
-                <Title>OctoTree</Title>
+                <Title>Octotree</Title>
                 <Meta
                     name="description"
-                    content="OctoTree - create ASCII trees from Github repositories"
+                    content="Octotree - turn Github repositories into trees"
                 />
                 <Meta name="author" content="uncenter" />
                 <Meta charset="utf-8" />
