@@ -20,6 +20,8 @@ export default function App() {
             await urlToTree(formData.get("url") as string, {
                 roundLast: formData.get("roundLast") === "on" ? true : false,
                 rootDir: formData.get("rootDir") === "on" ? true : false,
+                trailingSlash:
+                    formData.get("trailingSlash") === "on" ? true : false,
                 cache: formData.get("cache") === "on" ? true : false,
             })
     );
@@ -75,7 +77,7 @@ export default function App() {
                 <div class="flex flex-row items-center gap-4">
                     <Switch.Root class="mt-3 inline-flex items-center">
                         <Switch.Label class="text-sm font-medium text-gray-900 dark:text-white">
-                            Round Last
+                            Rounded Corners
                         </Switch.Label>
                         <Switch.Input type="checkbox" name="roundLast" />
                         <Switch.Control class="ml-2 inline-flex items-center h-6 w-11 border border-zinc-300 bg-zinc-200 transition-[250ms] duration-[background-color] px-0.5 py-0 rounded-xl border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)] cursor-pointer">
@@ -87,6 +89,18 @@ export default function App() {
                             Root Directory
                         </Switch.Label>
                         <Switch.Input type="checkbox" name="rootDir" />
+                        <Switch.Control class="ml-2 inline-flex items-center h-6 w-11 border border-zinc-300 bg-zinc-200 transition-[250ms] duration-[background-color] px-0.5 py-0 rounded-xl border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)] cursor-pointer">
+                            <Switch.Thumb class="h-5 w-5 bg-[white] transition-[250ms] duration-[transform] rounded-[10px] data-[checked]:translate-x-[1.2em] -translate-x-[0.1em]"></Switch.Thumb>
+                        </Switch.Control>
+                    </Switch.Root>
+                    <Switch.Root
+                        defaultIsChecked
+                        class="mt-3 inline-flex items-center"
+                    >
+                        <Switch.Label class="text-sm font-medium text-gray-900 dark:text-white">
+                            Trailing Slash
+                        </Switch.Label>
+                        <Switch.Input type="checkbox" name="trailingSlash" />
                         <Switch.Control class="ml-2 inline-flex items-center h-6 w-11 border border-zinc-300 bg-zinc-200 transition-[250ms] duration-[background-color] px-0.5 py-0 rounded-xl border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)] cursor-pointer">
                             <Switch.Thumb class="h-5 w-5 bg-[white] transition-[250ms] duration-[transform] rounded-[10px] data-[checked]:translate-x-[1.2em] -translate-x-[0.1em]"></Switch.Thumb>
                         </Switch.Control>

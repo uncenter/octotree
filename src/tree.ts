@@ -72,7 +72,9 @@ function buildAsciiTree(treeObj: Object, config: any = {}) {
                 isLast = false;
             }
             if (obj[key] instanceof Object) {
-                result += `${getPrefix(level, isLast)}${key}${FOLDER_SUFFIX}\n`;
+                result += `${getPrefix(level, isLast)}${key}${
+                    config.trailingSlash === true ? FOLDER_SUFFIX : ""
+                }\n`;
                 result += asciiTree(obj[key], level + 1, config);
             } else {
                 result += `${getPrefix(level, isLast)}${obj[key]}\n`;
