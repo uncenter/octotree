@@ -6,7 +6,7 @@ interface PageProps {
 
 export function Page({ children, footer = true }: PageProps) {
     return (
-        <div class="container mx-auto flex flex-col">
+        <div class="mx-auto flex flex-col">
             <div class="m-6 flex flex-col items-center">
                 <header class="flex flex-row justify-around w-full mb-6">
                     <div class="flex flex-row items-center gap-4">
