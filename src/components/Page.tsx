@@ -6,7 +6,7 @@ interface PageProps {
 
 export function Page({ children, footer = true }: PageProps) {
     return (
-        <div class="mx-auto flex flex-col">
+        <div class="mx-auto flex flex-col min-h-screen">
             <div class="m-6 flex flex-col items-center">
                 <header class="flex flex-row justify-around w-full mb-6">
                     <div class="flex flex-row items-center gap-4">
@@ -22,7 +22,7 @@ export function Page({ children, footer = true }: PageProps) {
                     {children}
                 </main>
                 {footer && (
-                    <footer class="mt-6">
+                    <footer class="mt-6 mb-2">
                         <p class="text-center">
                             MIT licensed and{" "}
                             <a href="https://github.com/uncenter/octotree">

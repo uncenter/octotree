@@ -28,7 +28,7 @@ export default function App() {
 
     return (
         <Page>
-            <Form class="flex flex-col items-center w-full">
+            <Form class="flex flex-col items-center w-full flex-0">
                 <Input.Root class="mt-3 lg:w-3/4 w-full">
                     <Input.Label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                         Repository Path
@@ -37,41 +37,43 @@ export default function App() {
                         type="text"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         name="url"
-                        placeholder="uncenter/octotree"
+                        placeholder="https://github.com/owner/repo or owner/repo"
                     />
                     <Input.Description class="text-sm text-gray-500 dark:text-gray-400 mt-4 break-words">
-                        <p>
-                            Enter the path to a Github repository using one of
-                            the following syntaxes. For both, it defaults to
-                            checking the main and master branches if none is
-                            specified.
-                        </p>
-                        <ul class="list-disc ml-4">
-                            <li class="mt-1">
-                                <p>
-                                    Shortened path syntax:
-                                    <code>:owner/:repo</code>. You can
-                                    optionally specify a branch by adding
-                                    #branch to the end of the path (e.g.
-                                    <code>:owner/:repo#:branch</code>).
-                                </p>
-                            </li>
-                            <li class="mt-1">
-                                <p>
-                                    Full URL syntax (useful for copy and pasting
-                                    directly from Github):
-                                    <code>https://github.com/:owner/:repo</code>
-                                    . You can specify a branch by adding
-                                    /tree/branch-name to the end of the URL
-                                    (e.g.
-                                    <code>
-                                        https://github.com/:owner/:repo/tree/:branch
-                                    </code>
-                                    , the same as if you copied the URL from
-                                    Github).
-                                </p>
-                            </li>
-                        </ul>
+                        <details>
+                            <summary class="text-blue-500 cursor-pointer text-center mb-2">
+                                Syntax Help
+                            </summary>
+                            <p class="text-center">
+                                Octotree will try fetching the main and master
+                                branches if none is specified for both syntaxes.
+                            </p>
+                            <ul class="list-disc ml-4">
+                                <li class="mt-1">
+                                    <p>
+                                        Short syntax:
+                                        <code>:owner/:repo</code>. Optionally
+                                        specify a branch by appending{" "}
+                                        <code>#:branch</code> (e.g.
+                                        <code>:owner/:repo#:branch</code>).
+                                    </p>
+                                </li>
+                                <li class="mt-1">
+                                    <p>
+                                        URL syntax:
+                                        <code>
+                                            https://github.com/:owner/:repo
+                                        </code>
+                                        . You can specify a branch by appending
+                                        <code>/tree/:branch</code> (e.g.
+                                        <code>
+                                            https://github.com/:owner/:repo/tree/:branch
+                                        </code>
+                                        ).
+                                    </p>
+                                </li>
+                            </ul>
+                        </details>
                     </Input.Description>
                 </Input.Root>
                 <div class="flex flex-row items-center gap-4 mt-6 justify-center flex-wrap">
@@ -133,8 +135,8 @@ export default function App() {
                     Get Tree
                 </Button.Root>
             </Form>
-            <div class="relative lg:w-3/4 w-full mt-6">
-                <pre class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-[60vh] overflow-y-auto">
+            <div class="relative lg:w-3/4 w-full mt-4">
+                <pre class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 flex-auto min-h-[16em]">
                     <Show when={!tree.pending} fallback={"Loading..."}>
                         {tree.result}
                     </Show>
