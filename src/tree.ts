@@ -131,33 +131,26 @@ export async function urlToTree(url: string, config: any = {}) {
         return "Please enter a path or URL.";
     }
     let [owner, repo, branch] = parseUrl(url);
+    const path = `${owner}/${repo}${branch ? `#${branch}` : ""}`;
     if (!owner || !repo) {
         return `Invalid path or URL "${url}". Please enter a valid path or URL.`;
     }
     if (!isServer && config.cache === true) {
-        if (localStorage.getItem(`cache.${owner}/${repo}#${branch}`)) {
+        if (localStorage.getItem(`cache.${path}`)) {
             if (
                 new Date(
-                    localStorage.getItem(
-                        `cache.expires.${owner}/${repo}#${branch}`
-                    ) as string
+                    localStorage.getItem(`cache.expires.${path}`) as string
                 ) > new Date()
             ) {
                 console.log("Using cached tree...");
                 return buildAsciiTree(
-                    JSON.parse(
-                        localStorage.getItem(
-                            `cache.${owner}/${repo}#${branch}`
-                        ) as string
-                    ),
+                    JSON.parse(localStorage.getItem(`cache.${path}`) as string),
                     config
                 );
             } else {
                 console.log("Cache expired, fetching tree...");
-                localStorage.removeItem(`cache.${owner}/${repo}#${branch}`);
-                localStorage.removeItem(
-                    `cache.expires.${owner}/${repo}#${branch}`
-                );
+                localStorage.removeItem(`cache.${path}`);
+                localStorage.removeItem(`cache.expires.${path}`);
             }
         }
     }
@@ -166,7 +159,6 @@ export async function urlToTree(url: string, config: any = {}) {
     if (branch === undefined) {
         try {
             sha = await getTreeSha(owner as string, repo as string, "main");
-            branch = "main";
         } catch (err) {
             try {
                 sha = await getTreeSha(
@@ -174,7 +166,6 @@ export async function urlToTree(url: string, config: any = {}) {
                     repo as string,
                     "master"
                 );
-                branch = "master";
             } catch (err: any) {
                 return `Repository "${owner}/${repo}" not found. Please enter a valid path or URL.`;
             }
@@ -193,11 +184,11 @@ export async function urlToTree(url: string, config: any = {}) {
     const tree = await getTree(owner as string, repo as string, sha as string);
     if (!isServer) {
         localStorage.setItem(
-            `cache.${owner}/${repo}#${branch}`,
+            `cache.${path}`,
             JSON.stringify(createTreeObject(JSON.stringify(tree)))
         );
         localStorage.setItem(
-            `cache.expires.${owner}/${repo}#${branch}`,
+            `cache.expires.${path}`,
             new Date(Date.now() + 1000 * 60 * 60).toString()
         );
     }
