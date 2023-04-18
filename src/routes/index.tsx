@@ -6,7 +6,7 @@ import { Page } from "~/components/Page";
 import { urlToTree } from "../tree";
 import { isServer } from "solid-js/web";
 
-const version = "1.0.0";
+const version = "1.0.1";
 
 export default function App() {
     if (!isServer) {

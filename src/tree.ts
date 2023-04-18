@@ -131,26 +131,27 @@ export async function urlToTree(url: string, config: any = {}) {
         return "Please enter a path or URL.";
     }
     let [owner, repo, branch] = parseUrl(url);
-    const path = `${owner}/${repo}${branch ? `#${branch}` : ""}`;
+    const subkey = `[${owner}/${repo}${branch ? `#${branch}` : ""}]`;
+    const cacheKey = `cache_${subkey}`;
+    const cacheExpiresKey = `cache_expires_${subkey}`;
     if (!owner || !repo) {
         return `Invalid path or URL "${url}". Please enter a valid path or URL.`;
     }
     if (!isServer && config.cache === true) {
-        if (localStorage.getItem(`cache.${path}`)) {
+        if (localStorage.getItem(cacheKey)) {
             if (
-                new Date(
-                    localStorage.getItem(`cache.expires.${path}`) as string
-                ) > new Date()
+                new Date(localStorage.getItem(cacheExpiresKey) as string) >
+                new Date()
             ) {
                 console.log("Using cached tree...");
                 return buildAsciiTree(
-                    JSON.parse(localStorage.getItem(`cache.${path}`) as string),
+                    JSON.parse(localStorage.getItem(cacheKey) as string),
                     config
                 );
             } else {
                 console.log("Cache expired, fetching tree...");
-                localStorage.removeItem(`cache.${path}`);
-                localStorage.removeItem(`cache.expires.${path}`);
+                localStorage.removeItem(cacheKey);
+                localStorage.removeItem(cacheExpiresKey);
             }
         }
     }
@@ -184,11 +185,11 @@ export async function urlToTree(url: string, config: any = {}) {
     const tree = await getTree(owner as string, repo as string, sha as string);
     if (!isServer) {
         localStorage.setItem(
-            `cache.${path}`,
+            cacheKey,
             JSON.stringify(createTreeObject(JSON.stringify(tree)))
         );
         localStorage.setItem(
-            `cache.expires.${path}`,
+            cacheExpiresKey,
             new Date(Date.now() + 1000 * 60 * 60).toString()
         );
     }
