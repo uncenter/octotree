@@ -24,13 +24,12 @@ export default function Root() {
                     content="OctoTree - create ASCII trees from Github repositories"
                 />
                 <Meta name="author" content="uncenter" />
-                <Meta name="theme-color" content="#ffffff" />
                 <Meta charset="utf-8" />
                 <Meta
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
-                <Meta name="color-scheme" content="light" />
+                <Meta name="color-scheme" content="light dark" />
                 <Link rel="icon" type="image/svg+xml" href="favicon.svg" />
                 <script
                     async
