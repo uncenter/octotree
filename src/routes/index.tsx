@@ -74,47 +74,55 @@ export default function App() {
                         </ul>
                     </Input.Description>
                 </Input.Root>
-                <div class="flex flex-row items-center gap-4">
-                    <Switch.Root class="mt-3 inline-flex items-center">
-                        <Switch.Label class="text-sm font-medium text-gray-900 dark:text-white">
+                <div class="flex flex-row items-center gap-4 mt-6">
+                    <Switch.Root class="swt">
+                        <Switch.Label class="label">
                             Rounded Corners
                         </Switch.Label>
-                        <Switch.Input type="checkbox" name="roundLast" />
-                        <Switch.Control class="ml-2 inline-flex items-center h-6 w-11 border border-zinc-300 bg-zinc-200 transition-[250ms] duration-[background-color] px-0.5 py-0 rounded-xl border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)] cursor-pointer">
-                            <Switch.Thumb class="h-5 w-5 bg-[white] transition-[250ms] duration-[transform] rounded-[10px] data-[checked]:translate-x-[1.2em] -translate-x-[0.1em]"></Switch.Thumb>
+                        <Switch.Input
+                            type="checkbox"
+                            name="roundLast"
+                            class="input"
+                        />
+                        <Switch.Control class="control">
+                            <Switch.Thumb class="thumb"></Switch.Thumb>
                         </Switch.Control>
                     </Switch.Root>
-                    <Switch.Root class="mt-3 inline-flex items-center">
-                        <Switch.Label class="text-sm font-medium text-gray-900 dark:text-white">
+                    <Switch.Root class="swt">
+                        <Switch.Label class="label">
                             Root Directory
                         </Switch.Label>
-                        <Switch.Input type="checkbox" name="rootDir" />
-                        <Switch.Control class="ml-2 inline-flex items-center h-6 w-11 border border-zinc-300 bg-zinc-200 transition-[250ms] duration-[background-color] px-0.5 py-0 rounded-xl border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)] cursor-pointer">
-                            <Switch.Thumb class="h-5 w-5 bg-[white] transition-[250ms] duration-[transform] rounded-[10px] data-[checked]:translate-x-[1.2em] -translate-x-[0.1em]"></Switch.Thumb>
+                        <Switch.Input
+                            type="checkbox"
+                            name="rootDir"
+                            class="input"
+                        />
+                        <Switch.Control class="control">
+                            <Switch.Thumb class="thumb"></Switch.Thumb>
                         </Switch.Control>
                     </Switch.Root>
-                    <Switch.Root
-                        defaultIsChecked
-                        class="mt-3 inline-flex items-center"
-                    >
-                        <Switch.Label class="text-sm font-medium text-gray-900 dark:text-white">
+                    <Switch.Root defaultIsChecked class="swt">
+                        <Switch.Label class="label">
                             Trailing Slash
                         </Switch.Label>
-                        <Switch.Input type="checkbox" name="trailingSlash" />
-                        <Switch.Control class="ml-2 inline-flex items-center h-6 w-11 border border-zinc-300 bg-zinc-200 transition-[250ms] duration-[background-color] px-0.5 py-0 rounded-xl border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)] cursor-pointer">
-                            <Switch.Thumb class="h-5 w-5 bg-[white] transition-[250ms] duration-[transform] rounded-[10px] data-[checked]:translate-x-[1.2em] -translate-x-[0.1em]"></Switch.Thumb>
+                        <Switch.Input
+                            type="checkbox"
+                            name="trailingSlash"
+                            class="input"
+                        />
+                        <Switch.Control class="control">
+                            <Switch.Thumb class="thumb"></Switch.Thumb>
                         </Switch.Control>
                     </Switch.Root>
-                    <Switch.Root
-                        defaultIsChecked
-                        class="mt-3 inline-flex items-center"
-                    >
-                        <Switch.Label class="text-sm font-medium text-gray-900 dark:text-white">
-                            Use Cache
-                        </Switch.Label>
-                        <Switch.Input type="checkbox" name="cache" />
-                        <Switch.Control class="ml-2 inline-flex items-center h-6 w-11 border border-zinc-300 bg-zinc-200 transition-[250ms] duration-[background-color] px-0.5 py-0 rounded-xl border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)] cursor-pointer">
-                            <Switch.Thumb class="h-5 w-5 bg-[white] transition-[250ms] duration-[transform] rounded-[10px] data-[checked]:translate-x-[1.2em] -translate-x-[0.1em]"></Switch.Thumb>
+                    <Switch.Root defaultIsChecked class="swt">
+                        <Switch.Label class="label">Cache</Switch.Label>
+                        <Switch.Input
+                            type="checkbox"
+                            name="cache"
+                            class="input"
+                        />
+                        <Switch.Control class="control">
+                            <Switch.Thumb class="thumb"></Switch.Thumb>
                         </Switch.Control>
                     </Switch.Root>
                 </div>
