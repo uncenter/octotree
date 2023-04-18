@@ -74,7 +74,7 @@ export default function App() {
                         </ul>
                     </Input.Description>
                 </Input.Root>
-                <div class="flex flex-row items-center gap-4 mt-6">
+                <div class="flex flex-row items-center gap-4 mt-6 justify-center flex-wrap">
                     <Switch.Root class="swt">
                         <Switch.Label class="label">
                             Rounded Corners
