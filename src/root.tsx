@@ -30,7 +30,7 @@ export default function Root() {
                     content="width=device-width, initial-scale=1"
                 />
                 <Meta name="color-scheme" content="light dark" />
-                <Link rel="icon" type="image/svg+xml" href="favicon.svg" />
+                <Link rel="icon" type="image/png" href="favicon.png" />
                 <script
                     async
                     defer
