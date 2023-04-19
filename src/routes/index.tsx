@@ -48,7 +48,7 @@ export default function App() {
                                 Octotree will try fetching the main and master
                                 branches if none is specified for both syntaxes.
                             </p>
-                            <ul class="list-disc ml-4">
+                            <ul class="list-disc block ms-0 me-0 mbs-4 mbe-4 ps-10">
                                 <li class="mt-1">
                                     <p>
                                         Short syntax:
