@@ -41,8 +41,8 @@ export default function App() {
                     />
                     <Input.Description class="text-sm text-gray-500 dark:text-gray-400 mt-4 break-words">
                         <details>
-                            <summary class="text-blue-500 cursor-pointer text-center mb-2">
-                                Syntax Help
+                            <summary class="text-blue-500 cursor-pointer mb-2 font-extrabold select-none text-center">
+                                More Info
                             </summary>
                             <p class="text-center">
                                 Octotree will try fetching the main and master
