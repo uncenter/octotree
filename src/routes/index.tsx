@@ -136,16 +136,20 @@ export default function App() {
                 </Button.Root>
             </Form>
             <div class="relative lg:w-3/4 w-full mt-4">
-                <pre class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 flex-auto min-h-[16em]">
+                <pre class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-[16em] overflow-scroll">
                     <Show when={!tree.pending} fallback={"Loading..."}>
                         {tree.result}
                     </Show>
                 </pre>
                 <Button.Root
                     aria-label="Copy to clipboard"
-                    class="hover:scale-110 absolute right-2 top-2 transition-transform duration-200"
+                    class="hover:scale-110 absolute right-4 top-4 transition-transform duration-200"
                     onClick={() => {
-                        navigator.clipboard.writeText(tree.result || "");
+                        if (document.querySelector("pre")?.textContent !== "") {
+                            navigator.clipboard.writeText(
+                                tree.result as string
+                            );
+                        }
                     }}
                 >
                     <svg
