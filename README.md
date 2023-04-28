@@ -7,7 +7,7 @@
 
 ## Roadmap
 
--   [ ] Save configuration options on reload
+-   [x] Save configuration options on reload
 -   [ ] Instantly update tree after config changes
 
 ## Contributing
