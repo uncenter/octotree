@@ -117,14 +117,12 @@ export async function fetchTree(url: string) {
         }
         return [];
     }
-    if (url === "") {
-        return "Please enter a path or URL.";
-    }
+    if (url === "") throw new FormError("Please enter a path or URL.");
     let [owner, repo, branch] = parseUrl(url);
-    const subkey = `[${owner}/${repo}${branch ? `#${branch}` : ""}]`;
-    if (!owner || !repo) {
-        return `Invalid path or URL "${url}". Please enter a valid path or URL.`;
-    }
+    if (!owner || !repo)
+        throw new FormError(
+            `Invalid path or URL "${url}". Please enter a valid path or URL.`
+        );
     let sha;
     console.log("Fetching tree...");
     if (branch === undefined) {
@@ -137,8 +135,10 @@ export async function fetchTree(url: string) {
                     repo as string,
                     "master"
                 );
-            } catch (err: any) {
-                return `Repository "${owner}/${repo}" not found. Please enter a valid path or URL.`;
+            } catch (err) {
+                throw new FormError(
+                    `Repository "${owner}/${repo}" not found. Please enter a valid path or URL.`
+                );
             }
         }
     } else {
@@ -148,8 +148,8 @@ export async function fetchTree(url: string) {
                 repo as string,
                 branch as string
             );
-        } catch (err: any) {
-            return "Branch not found.";
+        } catch (err) {
+            throw new FormError("Branch not found.");
         }
     }
     const tree = await getTree(owner as string, repo as string, sha as string);
