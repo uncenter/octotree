@@ -1,14 +1,13 @@
-import { isServer } from "solid-js/web";
+import { FormError } from "solid-start";
 
 export type TreeConfig = {
     addIndentChar?: boolean;
     addTrailingSlash?: boolean;
     useFancyCorners?: boolean;
     useRootDir?: boolean;
-    enableCache?: boolean;
 };
 
-function createTreeObject(json: string) {
+function createTree(json: string) {
     const hierarchicalObj: any = {};
 
     const data = JSON.parse(json);
@@ -30,7 +29,7 @@ function createTreeObject(json: string) {
     return hierarchicalObj;
 }
 
-function buildAsciiTree(treeObj: Object, config: TreeConfig) {
+export function buildTree(treeObj: Object, config: TreeConfig) {
     const FILE_PREFIX = "├── ";
     const LAST_FILE_PREFIX = "└── ";
     const FOLDER_SUFFIX = "/";
@@ -104,7 +103,7 @@ async function getTree(owner: string, repo: string, sha: string) {
     return data.tree;
 }
 
-export async function urlToTree(url: string, config: TreeConfig = {}) {
+export async function fetchTree(url: string) {
     function parseUrl(url: string) {
         let match = url.match(
             /^(?:https?:\/\/)?github\.com\/([^/]+)\/([^/]+)(?:\/tree\/([^/]+))?$/
@@ -123,28 +122,8 @@ export async function urlToTree(url: string, config: TreeConfig = {}) {
     }
     let [owner, repo, branch] = parseUrl(url);
     const subkey = `[${owner}/${repo}${branch ? `#${branch}` : ""}]`;
-    const cacheKey = `cache_${subkey}`;
-    const cacheExpiresKey = `cache_expires_${subkey}`;
     if (!owner || !repo) {
         return `Invalid path or URL "${url}". Please enter a valid path or URL.`;
-    }
-    if (!isServer && config.enableCache === true) {
-        if (localStorage.getItem(cacheKey)) {
-            if (
-                new Date(localStorage.getItem(cacheExpiresKey) as string) >
-                new Date()
-            ) {
-                console.log("Using cached tree...");
-                return buildAsciiTree(
-                    JSON.parse(localStorage.getItem(cacheKey) as string),
-                    config
-                );
-            } else {
-                console.log("Cache expired, fetching tree...");
-                localStorage.removeItem(cacheKey);
-                localStorage.removeItem(cacheExpiresKey);
-            }
-        }
     }
     let sha;
     console.log("Fetching tree...");
@@ -174,15 +153,5 @@ export async function urlToTree(url: string, config: TreeConfig = {}) {
         }
     }
     const tree = await getTree(owner as string, repo as string, sha as string);
-    if (!isServer) {
-        localStorage.setItem(
-            cacheKey,
-            JSON.stringify(createTreeObject(JSON.stringify(tree)))
-        );
-        localStorage.setItem(
-            cacheExpiresKey,
-            new Date(Date.now() + 1000 * 60 * 60).toString()
-        );
-    }
-    return buildAsciiTree(createTreeObject(JSON.stringify(tree)), config);
+    return createTree(JSON.stringify(tree));
 }

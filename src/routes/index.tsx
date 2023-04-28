@@ -1,9 +1,9 @@
-import { For, Show } from "solid-js";
+import { For, Show, createSignal } from "solid-js";
 import { createRouteAction } from "solid-start/data";
 import { Button, Switch, TextField as Input } from "@kobalte/core";
 import { Page } from "~/components/Page";
 
-import { TreeConfig, urlToTree } from "../tree";
+import { fetchTree, buildTree } from "../tree";
 import { isServer } from "solid-js/web";
 import { createStore } from "solid-js/store";
 
@@ -32,12 +32,6 @@ const options = [
         label: "Indent Character",
         description: "Add a visible line for each level of indentation.",
         initial: false,
-    },
-    {
-        name: "enableCache",
-        label: "Cache",
-        description: "Cache the tree for faster loading.",
-        initial: true,
     },
 ];
 
@@ -87,12 +81,7 @@ export default function App() {
     );
     const [tree, { Form }] = createRouteAction(
         async (formData: FormData) =>
-            await urlToTree(
-                formData.get("url") as string,
-                {
-                    ...state,
-                } as TreeConfig
-            )
+            await fetchTree(formData.get("url") as string)
     );
 
     function handleOptionChange(e: Event) {
@@ -151,26 +140,6 @@ export default function App() {
                         </details>
                     </Input.Description>
                 </Input.Root>
-                <div class="flex flex-row items-center gap-4 mt-6 justify-center flex-wrap">
-                    <For each={options}>
-                        {({ name, label, description, initial }) => (
-                            <Switch.Root class="swt" isChecked={state[name]}>
-                                <Switch.Label class="label">
-                                    {label}
-                                </Switch.Label>
-                                <Switch.Input
-                                    type="checkbox"
-                                    name={name}
-                                    class="input"
-                                    onClick={handleOptionChange}
-                                />
-                                <Switch.Control class="control">
-                                    <Switch.Thumb class="thumb"></Switch.Thumb>
-                                </Switch.Control>
-                            </Switch.Root>
-                        )}
-                    </For>
-                </div>
                 <Button.Root
                     type="submit"
                     class="btn outline green mt-6 justify-center"
@@ -178,10 +147,33 @@ export default function App() {
                     Get Tree
                 </Button.Root>
             </Form>
+            <div class="flex flex-row items-center gap-4 mt-6 justify-center flex-wrap">
+                <For each={options}>
+                    {({ name, label, description, initial }) => (
+                        <Switch.Root class="swt" isChecked={state[name]}>
+                            <Switch.Label class="label">{label}</Switch.Label>
+                            <Switch.Input
+                                type="checkbox"
+                                name={name}
+                                class="input"
+                                onClick={handleOptionChange}
+                            />
+                            <Switch.Control class="control">
+                                <Switch.Thumb class="thumb"></Switch.Thumb>
+                            </Switch.Control>
+                        </Switch.Root>
+                    )}
+                </For>
+            </div>
             <div class="relative lg:w-3/4 w-full mt-4">
                 <pre class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-[16em] overflow-scroll">
                     <Show when={!tree.pending} fallback={"Loading..."}>
-                        {tree.result}
+                        <Show when={tree.error}>
+                            <p class="text-red-500">{tree.error as string}</p>
+                        </Show>
+                        <Show when={tree.result && !tree.error}>
+                            {buildTree(tree.result as string, state)}
+                        </Show>
                     </Show>
                 </pre>
                 <Button.Root
