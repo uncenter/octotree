@@ -5,15 +5,6 @@
     <p>Easily convert Github repositories into their ASCII tree representations.</p>
 </div>
 
-## Roadmap
-
--   [x] Save configuration options on reload
--   [ ] Instantly update tree after config changes
-
-## Contributing
-
-Contributions are always welcome!
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
