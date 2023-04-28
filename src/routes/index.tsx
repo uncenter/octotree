@@ -1,31 +1,105 @@
-import { Show } from "solid-js";
+import { For, Show } from "solid-js";
 import { createRouteAction } from "solid-start/data";
 import { Button, Switch, TextField as Input } from "@kobalte/core";
 import { Page } from "~/components/Page";
 
-import { urlToTree } from "../tree";
+import { TreeConfig, urlToTree } from "../tree";
 import { isServer } from "solid-js/web";
+import { createStore } from "solid-js/store";
 
-const version = "1.0.1";
+const version = "1.1.0";
+const options = [
+    {
+        name: "useRootDir",
+        label: "Root Directory",
+        description: "Nest files in a root directory.",
+        initial: false,
+    },
+    {
+        name: "addTrailingSlash",
+        label: "Trailing Slash",
+        description: "Add a trailing slash to directories.",
+        initial: true,
+    },
+    {
+        name: "useFancyCorners",
+        label: "Fancy Corners",
+        description: "Use rounded corner characters whenever possible.",
+        initial: true,
+    },
+    {
+        name: "addIndentChar",
+        label: "Indent Character",
+        description: "Add a visible line for each level of indentation.",
+        initial: false,
+    },
+    {
+        name: "enableCache",
+        label: "Cache",
+        description: "Cache the tree for faster loading.",
+        initial: true,
+    },
+];
+
+const storage = {
+    get(name: string) {
+        if (!isServer) {
+            const value = localStorage.getItem(`octotree:${name}`);
+            return value;
+        } else {
+            return undefined;
+        }
+    },
+    set(name: string, value: any) {
+        if (!isServer) {
+            localStorage.setItem(
+                `octotree:${name}`,
+                typeof value !== "string" ? value.toString() : value
+            );
+        }
+    },
+};
 
 export default function App() {
     if (!isServer) {
-        if (localStorage.getItem("version") !== version) {
+        if (storage.get("version") !== version) {
             localStorage.clear();
+            storage.set("version", version);
         }
-        localStorage.setItem("version", version);
     }
+    const [state, setState] = createStore(
+        options.reduce((acc, { name, initial }) => {
+            if (!isServer) {
+                const value = storage.get(name) === "true";
+                if (value) {
+                    acc[name] = value;
+                    return acc;
+                } else {
+                    storage.set(name, initial);
+                    acc[name] = initial;
+                    return acc;
+                }
+            } else {
+                acc[name] = false;
+                return acc;
+            }
+        }, {} as Record<string, boolean>)
+    );
     const [tree, { Form }] = createRouteAction(
         async (formData: FormData) =>
-            await urlToTree(formData.get("url") as string, {
-                roundLast: formData.get("roundLast") === "on" ? true : false,
-                rootDir: formData.get("rootDir") === "on" ? true : false,
-                trailingSlash:
-                    formData.get("trailingSlash") === "on" ? true : false,
-                indentChar: formData.get("indentChar") === "on" ? true : false,
-                cache: formData.get("cache") === "on" ? true : false,
-            })
+            await urlToTree(
+                formData.get("url") as string,
+                {
+                    ...state,
+                } as TreeConfig
+            )
     );
+
+    function handleOptionChange(e: Event) {
+        const { name, checked } = e.target as HTMLInputElement;
+        setState(name, checked);
+        storage.set(name, checked);
+    }
 
     return (
         <Page>
@@ -78,67 +152,24 @@ export default function App() {
                     </Input.Description>
                 </Input.Root>
                 <div class="flex flex-row items-center gap-4 mt-6 justify-center flex-wrap">
-                    <Switch.Root class="swt" defaultIsChecked>
-                        <Switch.Label class="label">Fancy Corners</Switch.Label>
-                        <Switch.Input
-                            type="checkbox"
-                            name="roundLast"
-                            class="input"
-                        />
-                        <Switch.Control class="control">
-                            <Switch.Thumb class="thumb"></Switch.Thumb>
-                        </Switch.Control>
-                    </Switch.Root>
-                    <Switch.Root class="swt">
-                        <Switch.Label class="label">
-                            Root Directory
-                        </Switch.Label>
-                        <Switch.Input
-                            type="checkbox"
-                            name="rootDir"
-                            class="input"
-                        />
-                        <Switch.Control class="control">
-                            <Switch.Thumb class="thumb"></Switch.Thumb>
-                        </Switch.Control>
-                    </Switch.Root>
-                    <Switch.Root defaultIsChecked class="swt">
-                        <Switch.Label class="label">
-                            Trailing Slash
-                        </Switch.Label>
-                        <Switch.Input
-                            type="checkbox"
-                            name="trailingSlash"
-                            class="input"
-                        />
-                        <Switch.Control class="control">
-                            <Switch.Thumb class="thumb"></Switch.Thumb>
-                        </Switch.Control>
-                    </Switch.Root>
-                    <Switch.Root defaultIsChecked class="swt">
-                        <Switch.Label class="label">
-                            Indent Character
-                        </Switch.Label>
-                        <Switch.Input
-                            type="checkbox"
-                            name="indentChar"
-                            class="input"
-                        />
-                        <Switch.Control class="control">
-                            <Switch.Thumb class="thumb"></Switch.Thumb>
-                        </Switch.Control>
-                    </Switch.Root>
-                    <Switch.Root defaultIsChecked class="swt">
-                        <Switch.Label class="label">Cache</Switch.Label>
-                        <Switch.Input
-                            type="checkbox"
-                            name="cache"
-                            class="input"
-                        />
-                        <Switch.Control class="control">
-                            <Switch.Thumb class="thumb"></Switch.Thumb>
-                        </Switch.Control>
-                    </Switch.Root>
+                    <For each={options}>
+                        {({ name, label, description, initial }) => (
+                            <Switch.Root class="swt" isChecked={state[name]}>
+                                <Switch.Label class="label">
+                                    {label}
+                                </Switch.Label>
+                                <Switch.Input
+                                    type="checkbox"
+                                    name={name}
+                                    class="input"
+                                    onClick={handleOptionChange}
+                                />
+                                <Switch.Control class="control">
+                                    <Switch.Thumb class="thumb"></Switch.Thumb>
+                                </Switch.Control>
+                            </Switch.Root>
+                        )}
+                    </For>
                 </div>
                 <Button.Root
                     type="submit"

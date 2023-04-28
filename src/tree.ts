@@ -1,5 +1,13 @@
 import { isServer } from "solid-js/web";
 
+export type TreeConfig = {
+    addIndentChar?: boolean;
+    addTrailingSlash?: boolean;
+    useFancyCorners?: boolean;
+    useRootDir?: boolean;
+    enableCache?: boolean;
+};
+
 function createTreeObject(json: string) {
     const hierarchicalObj: any = {};
 
@@ -22,44 +30,21 @@ function createTreeObject(json: string) {
     return hierarchicalObj;
 }
 
-function sortTreeByFileType(treeObj: any) {
-    console.log(treeObj);
-    const sortedTreeObj: any = {};
-    const folders: any = [];
-    const files: any = [];
-    for (const key in treeObj) {
-        if (treeObj[key] instanceof Object) {
-            folders.push(key);
-        } else {
-            files.push(key);
-        }
-    }
-    folders.sort();
-    files.sort();
-    for (const folder of folders) {
-        sortedTreeObj[folder] = treeObj[folder];
-    }
-    for (const file of files) {
-        sortedTreeObj[file] = treeObj[file];
-    }
-    return sortedTreeObj;
-}
-
-function buildAsciiTree(treeObj: Object, config: any = {}) {
+function buildAsciiTree(treeObj: Object, config: TreeConfig) {
     const FILE_PREFIX = "├── ";
     const LAST_FILE_PREFIX = "└── ";
     const FOLDER_SUFFIX = "/";
     // const INDENT_PREFIX = "│   "
-    const INDENT_PREFIX = config.indentChar ? "│   " : "    ";
+    const INDENT_PREFIX = config.addIndentChar ? "│   " : "    ";
     const ROOT_PREFIX = "";
 
-    function asciiTree(obj: any, level: number, config: any) {
+    function asciiTree(obj: any, level: number = 0) {
         let result = "";
         function getPrefix(level: number, isLast: boolean) {
             if (level === 0) {
                 return ROOT_PREFIX;
             }
-            if (isLast && config.roundLast === true) {
+            if (isLast && config.useFancyCorners) {
                 return INDENT_PREFIX.repeat(level - 1) + LAST_FILE_PREFIX;
             }
             return INDENT_PREFIX.repeat(level - 1) + FILE_PREFIX;
@@ -69,7 +54,7 @@ function buildAsciiTree(treeObj: Object, config: any = {}) {
             let isLast;
             if (
                 obj[key] === Object.keys(obj).pop() ||
-                (!config.indentChar &&
+                (!config.addIndentChar &&
                     Object.keys(obj[key]).length > 0 &&
                     obj[key] instanceof Object)
             ) {
@@ -79,9 +64,9 @@ function buildAsciiTree(treeObj: Object, config: any = {}) {
             }
             if (obj[key] instanceof Object) {
                 result += `${getPrefix(level, isLast)}${key}${
-                    config.trailingSlash === true ? FOLDER_SUFFIX : ""
+                    config.addTrailingSlash === true ? FOLDER_SUFFIX : ""
                 }\n`;
-                result += asciiTree(obj[key], level + 1, config);
+                result += asciiTree(obj[key], level + 1);
             } else {
                 result += `${getPrefix(level, isLast)}${obj[key]}\n`;
             }
@@ -89,10 +74,10 @@ function buildAsciiTree(treeObj: Object, config: any = {}) {
 
         return result;
     }
-    if (config.rootDir === true) {
+    if (config.useRootDir === true) {
         treeObj = { ".": treeObj };
     }
-    return asciiTree(treeObj, 0, config);
+    return asciiTree(treeObj);
 }
 
 async function getTreeSha(owner: string, repo: string, branch: string) {
@@ -119,7 +104,7 @@ async function getTree(owner: string, repo: string, sha: string) {
     return data.tree;
 }
 
-export async function urlToTree(url: string, config: any = {}) {
+export async function urlToTree(url: string, config: TreeConfig = {}) {
     function parseUrl(url: string) {
         let match = url.match(
             /^(?:https?:\/\/)?github\.com\/([^/]+)\/([^/]+)(?:\/tree\/([^/]+))?$/
@@ -143,7 +128,7 @@ export async function urlToTree(url: string, config: any = {}) {
     if (!owner || !repo) {
         return `Invalid path or URL "${url}". Please enter a valid path or URL.`;
     }
-    if (!isServer && config.cache === true) {
+    if (!isServer && config.enableCache === true) {
         if (localStorage.getItem(cacheKey)) {
             if (
                 new Date(localStorage.getItem(cacheExpiresKey) as string) >
