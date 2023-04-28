@@ -22,6 +22,7 @@ export default function App() {
                 rootDir: formData.get("rootDir") === "on" ? true : false,
                 trailingSlash:
                     formData.get("trailingSlash") === "on" ? true : false,
+                indentChar: formData.get("indentChar") === "on" ? true : false,
                 cache: formData.get("cache") === "on" ? true : false,
             })
     );
@@ -77,10 +78,8 @@ export default function App() {
                     </Input.Description>
                 </Input.Root>
                 <div class="flex flex-row items-center gap-4 mt-6 justify-center flex-wrap">
-                    <Switch.Root class="swt">
-                        <Switch.Label class="label">
-                            Rounded Corners
-                        </Switch.Label>
+                    <Switch.Root class="swt" defaultIsChecked>
+                        <Switch.Label class="label">Fancy Corners</Switch.Label>
                         <Switch.Input
                             type="checkbox"
                             name="roundLast"
@@ -110,6 +109,19 @@ export default function App() {
                         <Switch.Input
                             type="checkbox"
                             name="trailingSlash"
+                            class="input"
+                        />
+                        <Switch.Control class="control">
+                            <Switch.Thumb class="thumb"></Switch.Thumb>
+                        </Switch.Control>
+                    </Switch.Root>
+                    <Switch.Root defaultIsChecked class="swt">
+                        <Switch.Label class="label">
+                            Indent Character
+                        </Switch.Label>
+                        <Switch.Input
+                            type="checkbox"
+                            name="indentChar"
                             class="input"
                         />
                         <Switch.Control class="control">

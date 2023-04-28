@@ -49,7 +49,8 @@ function buildAsciiTree(treeObj: Object, config: any = {}) {
     const FILE_PREFIX = "├── ";
     const LAST_FILE_PREFIX = "└── ";
     const FOLDER_SUFFIX = "/";
-    const INDENT_PREFIX = "│   ";
+    // const INDENT_PREFIX = "│   "
+    const INDENT_PREFIX = config.indentChar ? "│   " : "    ";
     const ROOT_PREFIX = "";
 
     function asciiTree(obj: any, level: number, config: any) {
@@ -66,7 +67,12 @@ function buildAsciiTree(treeObj: Object, config: any = {}) {
 
         for (const key in obj) {
             let isLast;
-            if (obj[key] === Object.keys(obj).pop()) {
+            if (
+                obj[key] === Object.keys(obj).pop() ||
+                (!config.indentChar &&
+                    Object.keys(obj[key]).length > 0 &&
+                    obj[key] instanceof Object)
+            ) {
                 isLast = true;
             } else {
                 isLast = false;
