@@ -29,11 +29,25 @@ function createTree(json: string) {
     return hierarchicalObj;
 }
 
+function sortTreeAlphabetically(treeObj: Object) {
+    const sortedTree: any = {};
+    const keys = Object.keys(treeObj).sort();
+    for (const key of keys) {
+        if (treeObj[key as keyof Object] instanceof Object) {
+            sortedTree[key] = sortTreeAlphabetically(
+                treeObj[key as keyof Object]
+            );
+        } else {
+            sortedTree[key] = treeObj[key as keyof Object];
+        }
+    }
+    return sortedTree;
+}
+
 export function buildTree(treeObj: Object, config: TreeConfig) {
     const FILE_PREFIX = "├── ";
     const LAST_FILE_PREFIX = "└── ";
     const FOLDER_SUFFIX = "/";
-    // const INDENT_PREFIX = "│   "
     const INDENT_PREFIX = config.addIndentChar ? "│   " : "    ";
     const ROOT_PREFIX = "";
 

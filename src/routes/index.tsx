@@ -1,4 +1,4 @@
-import { For, Show, createSignal } from "solid-js";
+import { For, Show } from "solid-js";
 import { createRouteAction } from "solid-start/data";
 import { Button, Switch, TextField as Input } from "@kobalte/core";
 import { Page } from "~/components/Page";
@@ -105,7 +105,7 @@ export default function App() {
                     />
                     <Input.Description class="text-sm text-gray-500 dark:text-gray-400 mt-4 break-words">
                         <details>
-                            <summary class="text-blue-500 cursor-pointer mb-2 font-extrabold select-none text-center">
+                            <summary class="text-blue-500 cursor-pointer font-extrabold select-none text-center -ml-[0.4rem]">
                                 Syntax Help
                             </summary>
                             <p class="text-center">
@@ -179,23 +179,75 @@ export default function App() {
                 <Button.Root
                     aria-label="Copy to clipboard"
                     class="hover:scale-110 absolute right-4 top-4 transition-transform duration-200"
-                    onClick={() => {
+                    onClick={(e) => {
+                        const button = e.currentTarget;
                         if (document.querySelector("pre")?.textContent !== "") {
                             navigator.clipboard.writeText(
                                 tree.result as string
                             );
                         }
+                        button.innerHTML = `<svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 24 24"
+                    >
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>`;
+                        button.style.color = "#2bbd50";
+                        console.log(button);
+                        setTimeout(() => {
+                            console.log(button);
+                            button.innerHTML = `<svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            stroke="currentColor"
+                            fill="none"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            width="1em"
+                            height="1em"
+                            viewBox="0 0 24 24"
+                        >
+                            <rect
+                                x="9"
+                                y="9"
+                                width="13"
+                                height="13"
+                                rx="2"
+                                ry="2"
+                            ></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>`;
+                            button.style.color = "#a1a1aa";
+                        }, 2000);
                     }}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="fill-current"
+                        stroke="currentColor"
+                        fill="none"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                         width="1em"
                         height="1em"
-                        stroke-width="0"
                         viewBox="0 0 24 24"
                     >
-                        <path d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
+                        <rect
+                            x="9"
+                            y="9"
+                            width="13"
+                            height="13"
+                            rx="2"
+                            ry="2"
+                        ></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                     </svg>
                 </Button.Root>
             </div>
