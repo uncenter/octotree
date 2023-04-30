@@ -188,7 +188,7 @@ export default function App() {
                         }
                         button.innerHTML = `<svg
                         xmlns="http://www.w3.org/2000/svg"
-                        stroke="currentColor"
+                        stroke="#2bbd50"
                         fill="none"
                         stroke-width="2"
                         stroke-linecap="round"
@@ -199,13 +199,10 @@ export default function App() {
                     >
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>`;
-                        button.style.color = "#2bbd50";
-                        console.log(button);
                         setTimeout(() => {
-                            console.log(button);
                             button.innerHTML = `<svg
                             xmlns="http://www.w3.org/2000/svg"
-                            stroke="currentColor"
+                            stroke="#a1a1aa"
                             fill="none"
                             stroke-width="2"
                             stroke-linecap="round"
@@ -224,13 +221,12 @@ export default function App() {
                             ></rect>
                             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                         </svg>`;
-                            button.style.color = "#a1a1aa";
                         }, 2000);
                     }}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        stroke="currentColor"
+                        stroke="#a1a1aa"
                         fill="none"
                         stroke-width="2"
                         stroke-linecap="round"
