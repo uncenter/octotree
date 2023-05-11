@@ -25,10 +25,12 @@ export function Page({ children, footer = true }: PageProps) {
                     <footer class="mt-6 mb-2">
                         <p class="text-center">
                             MIT licensed and{" "}
-                            <a href="https://github.com/uncenter/octotree">
-                                open source on GitHub
-                            </a>{" "}
-                            🎉
+                            <a
+                                href="https://github.com/uncenter/octotree"
+                                class="mt-3 text-center text-blue-500"
+                            >
+                                open source on GitHub.
+                            </a>
                         </p>
                     </footer>
                 )}
