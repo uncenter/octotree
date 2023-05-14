@@ -63,16 +63,7 @@ pre {
     transition: all 0.2s ease-in-out;
 }
 
-.btn[data-disabled] {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.btn[data-disabled]:hover {
-    background-color: transparent;
-}
-
-.btn.outline:hover {
+.btn.outline:hover:not([data-disabled]) {
     outline-color: transparent;
 }
 
@@ -81,7 +72,7 @@ pre {
     border-color: #1f2937;
 }
 
-.btn.outline.gray:hover {
+.btn.outline.gray:hover:not([data-disabled]) {
     background-color: #111827;
     color: #ffffff;
 }
@@ -91,7 +82,7 @@ pre {
     border-color: #1d4ed8;
 }
 
-.btn.outline.blue:hover {
+.btn.outline.blue:hover:not([data-disabled]) {
     background-color: #1e40af;
     color: #ffffff;
 }
@@ -101,7 +92,7 @@ pre {
     border-color: #047857;
 }
 
-.btn.outline.green:hover {
+.btn.outline.green:hover:not([data-disabled]) {
     background-color: #065f46;
     color: #ffffff;
 }
@@ -111,7 +102,7 @@ pre {
     border-color: #dc2626;
 }
 
-.btn.outline.red:hover {
+.btn.outline.red:hover:not([data-disabled]) {
     background-color: #991b1b;
     color: #ffffff;
 }
@@ -121,7 +112,7 @@ pre {
     border-color: #fbbf24;
 }
 
-.btn.outline.yellow:hover {
+.btn.outline.yellow:hover:not([data-disabled]) {
     background-color: #f59e0b;
     color: #ffffff;
 }
@@ -131,9 +122,14 @@ pre {
     border-color: #6d28d9;
 }
 
-.btn.outline.purple:hover {
+.btn.outline.purple:hover:not([data-disabled]) {
     background-color: #5b21b6;
     color: #ffffff;
+}
+
+.btn.outline[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .btn.solid {
