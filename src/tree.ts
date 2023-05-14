@@ -7,11 +7,10 @@ export type TreeConfig = {
     useRootDir?: boolean;
 };
 
-function pathsListToTreeObject(json: string) {
+function githubRepoToTreeObject(json: string) {
     const hierarchicalObj: any = {};
 
     const data = JSON.parse(json);
-    console.log(data);
     for (const obj of data) {
         const pathArr = obj.path.split("/");
         let currentObj = hierarchicalObj;
@@ -168,5 +167,5 @@ export async function fetchTree(url: string) {
         }
     }
     const tree = await getTree(owner as string, repo as string, sha as string);
-    return pathsListToTreeObject(JSON.stringify(tree));
+    return githubRepoToTreeObject(JSON.stringify(tree));
 }
