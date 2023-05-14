@@ -7,51 +7,78 @@ export type TreeConfig = {
     useRootDir?: boolean;
 };
 
-function githubRepoToTreeObject(json: string) {
-    const hierarchicalObj: any = {};
+export function flattenPaths(
+    hierarchicalList: any,
+    parentPath: string = ""
+): string[] {
+    let flattenedPaths: string[] = [];
+
+    for (const item of hierarchicalList) {
+        if (typeof item === "object") {
+            const folderName = Object.keys(item)[0];
+            const folderPath = parentPath
+                ? `${parentPath}/${folderName}`
+                : folderName;
+            const folderItems = item[folderName];
+            const folderPaths = flattenPaths(folderItems, folderPath);
+            flattenedPaths = flattenedPaths.concat(folderPaths);
+        } else {
+            const filePath = parentPath ? `${parentPath}/${item}` : item;
+            flattenedPaths.push(filePath);
+        }
+    }
+
+    return flattenedPaths;
+}
+
+function githubRepoToTreeArray(json: string) {
+    const hierarchicalList: any = [];
 
     const data = JSON.parse(json);
     for (const obj of data) {
         const pathArr = obj.path.split("/");
-        let currentObj = hierarchicalObj;
-        for (const dir of pathArr.slice(0, -1)) {
-            if (!currentObj[dir]) {
-                currentObj[dir] = {};
+        const fileName = pathArr[pathArr.length - 1];
+
+        let currentList = hierarchicalList;
+        for (let i = 0; i < pathArr.length - 1; i++) {
+            const folderName = pathArr[i];
+            let folderObj = currentList.find(
+                (item: any) => typeof item === "object" && item[folderName]
+            );
+            if (!folderObj) {
+                folderObj = { [folderName]: [] };
+                currentList.push(folderObj);
             }
-            currentObj = currentObj[dir];
+            currentList = folderObj[folderName];
         }
+
         if (obj.type === "tree") {
-            currentObj[pathArr[pathArr.length - 1]] = {};
-        } else {
-            currentObj[pathArr[pathArr.length - 1]] = obj.path.split("/").pop();
-        }
-    }
-    return hierarchicalObj;
-}
-
-export function treeObjectToPathsList(obj: Object) {
-    const pathsList: string[] = [];
-    function traverseTree(obj: any, path: string = "") {
-        for (const key in obj) {
-            if (obj[key] instanceof Object) {
-                traverseTree(obj[key], path + key + "/");
-            } else {
-                pathsList.push(path + obj[key]);
+            const folderName = fileName;
+            let folderObj = currentList.find(
+                (item: any) => typeof item === "object" && item[folderName]
+            );
+            if (!folderObj) {
+                folderObj = { [folderName]: [] };
+                currentList.push(folderObj);
             }
+            currentList = folderObj[folderName];
+        } else {
+            currentList.push(fileName);
         }
     }
-    traverseTree(obj);
-    return pathsList;
+
+    return hierarchicalList;
 }
 
-export function buildTree(treeObj: Object, config: TreeConfig) {
+export function buildTree(treeArr: any[], config: TreeConfig) {
     const FILE_PREFIX = "├── ";
     const LAST_FILE_PREFIX = "└── ";
     const FOLDER_SUFFIX = "/";
     const INDENT_PREFIX = config.addIndentChar ? "│   " : "    ";
     const ROOT_PREFIX = "";
+    const ROOT_DIR_NAME = ".";
 
-    function asciiTree(obj: any, level: number = 0) {
+    function asciiTree(arr: any[], level: number = 0) {
         let result = "";
         function getPrefix(level: number, isLast: boolean) {
             if (level === 0) {
@@ -63,36 +90,34 @@ export function buildTree(treeObj: Object, config: TreeConfig) {
             return INDENT_PREFIX.repeat(level - 1) + FILE_PREFIX;
         }
 
-        for (const key in obj) {
-            let isLast;
-            if (
-                obj[key] === Object.keys(obj).pop() ||
-                (!config.addIndentChar &&
-                    Object.keys(obj[key]).length > 0 &&
-                    obj[key] instanceof Object)
-            ) {
-                isLast = true;
-            } else {
-                isLast = false;
-            }
-            if (obj[key] instanceof Object) {
-                result += `${getPrefix(level, isLast)}${key}${
+        for (let i = 0; i < arr.length; i++) {
+            const item = arr[i];
+            const isLast =
+                i === arr.length - 1 ||
+                (typeof item === "object" && arr.length > 1);
+
+            if (typeof item === "object") {
+                const folderName = Object.keys(item)[0];
+                const folderItems = item[folderName];
+
+                result += `${getPrefix(level, isLast)}${folderName}${
                     config.addTrailingSlash === true ? FOLDER_SUFFIX : ""
                 }\n`;
-                result += asciiTree(obj[key], level + 1);
+                result += asciiTree(folderItems, level + 1);
             } else {
-                result += `${getPrefix(level, isLast)}${obj[key]}\n`;
+                result += `${getPrefix(level, isLast)}${item}\n`;
             }
         }
 
         return result;
     }
-    if (config.useRootDir === true) {
-        treeObj = { ".": treeObj };
-    }
-    return asciiTree(treeObj);
-}
 
+    if (config.useRootDir === true) {
+        treeArr = [{ [ROOT_DIR_NAME]: treeArr }];
+    }
+
+    return asciiTree(treeArr);
+}
 async function getTreeSha(owner: string, repo: string, branch: string) {
     const data = await fetch(
         `https://api.github.com/repos/${owner}/${repo}/branches/${branch}`
@@ -167,5 +192,5 @@ export async function fetchTree(url: string) {
         }
     }
     const tree = await getTree(owner as string, repo as string, sha as string);
-    return githubRepoToTreeObject(JSON.stringify(tree));
+    return githubRepoToTreeArray(JSON.stringify(tree));
 }

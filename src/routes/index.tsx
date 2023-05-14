@@ -10,7 +10,7 @@ import {
 import { Page } from "~/components/Page";
 import { OcX2 } from "solid-icons/oc";
 
-import { fetchTree, buildTree, treeObjectToPathsList } from "../tree";
+import { fetchTree, buildTree, flattenPaths } from "../tree";
 import { isServer } from "solid-js/web";
 import { createStore } from "solid-js/store";
 
@@ -192,7 +192,7 @@ export default function App() {
                             <p class="text-red-400">{tree.error.message}</p>
                         </Show>
                         <Show when={tree.result && !tree.error}>
-                            {buildTree(tree.result as string, state)}
+                            {buildTree(tree.result, state)}
                         </Show>
                     </Show>
                 </pre>
@@ -331,7 +331,7 @@ export default function App() {
                                             ) {
                                                 downloadJson(
                                                     JSON.stringify(
-                                                        treeObjectToPathsList(
+                                                        flattenPaths(
                                                             tree.result
                                                         ),
                                                         null,
@@ -364,7 +364,7 @@ export default function App() {
                                             ) {
                                                 navigator.clipboard.writeText(
                                                     JSON.stringify(
-                                                        treeObjectToPathsList(
+                                                        flattenPaths(
                                                             tree.result
                                                         ),
                                                         null,
