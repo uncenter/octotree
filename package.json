@@ -16,10 +16,11 @@
         "vite": "^4.1.4"
     },
     "dependencies": {
-        "@kobalte/core": "^0.8.2",
+        "@kobalte/core": "^0.9.6",
         "@kobalte/tailwindcss": "^0.5.0",
         "@solidjs/meta": "^0.28.2",
         "@solidjs/router": "^0.8.2",
+        "solid-icons": "^1.0.4",
         "solid-js": "^1.7.2",
         "solid-start": "^0.2.26",
         "solid-start-vercel": "^0.2.26",

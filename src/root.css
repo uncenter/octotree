@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    a {
+        @apply font-medium text-blue-600 dark:text-blue-500 hover:underline;
+    }
+}
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
@@ -9,14 +15,19 @@ body {
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #fff;
-    color: #18181b;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg: #fff;
+        --fg: #18181b;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
-    body {
-        background-color: #18181b;
-        color: #fff;
+    :root {
+        --bg: #18181b;
+        --fg: #fff;
     }
 }
 
@@ -36,10 +47,6 @@ pre {
         monospace;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
 .btn {
     border-radius: 0.5rem;
     padding-top: 0.625rem;
@@ -54,6 +61,19 @@ a:hover {
     text-align: center;
     border-width: 1px;
     transition: all 0.2s ease-in-out;
+}
+
+.btn[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn[data-disabled]:hover {
+    background-color: transparent;
+}
+
+.btn.outline:hover {
+    outline-color: transparent;
 }
 
 .btn.outline.gray {
@@ -208,4 +228,80 @@ a:hover {
     margin-right: 6px;
     font-size: 14px;
     user-select: none;
+}
+
+.alert-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background-color: rgb(0 0 0 / 0.2);
+    animation: overlayHide 250ms ease 100ms forwards;
+}
+
+.alert-overlay[data-expanded] {
+    animation: overlayShow 200ms ease;
+}
+
+.alert-positioner {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.alert-content {
+    z-index: 50;
+    max-width: min(calc(100vw - 16px), 500px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+        0 4px 6px -4px rgb(0 0 0 / 0.1);
+    animation: contentHide 300ms ease-in forwards;
+}
+
+.alert-content[data-expanded] {
+    animation: contentShow 300ms ease-out;
+}
+
+@keyframes overlayShow {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes overlayHide {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@keyframes contentShow {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes contentHide {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+}
+
+.radio__input:focus-visible + .radio__control {
+    outline: 2px solid hsl(200 98% 39%);
+    outline-offset: 2px;
 }

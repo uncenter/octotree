@@ -6,6 +6,10 @@ module.exports = {
             flex: {
                 0: "0 0 auto",
             },
+            colors: {
+                bg: "var(--bg)",
+                fg: "var(--fg)",
+            },
         },
     },
     plugins: [require("tailwindcss-logical")],

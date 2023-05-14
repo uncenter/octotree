@@ -21,7 +21,7 @@ export default function Root() {
                 <Title>Octotree</Title>
                 <Meta
                     name="description"
-                    content="Octotree - turn Github repositories into trees"
+                    content="Octotree - turn Github repositories into ASCII trees."
                 />
                 <Meta name="author" content="uncenter" />
                 <Meta charset="utf-8" />

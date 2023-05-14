@@ -1,4 +1,4 @@
-import { FormError } from "solid-start";
+import { FormError, json } from "solid-start";
 
 export type TreeConfig = {
     addIndentChar?: boolean;
@@ -7,10 +7,11 @@ export type TreeConfig = {
     useRootDir?: boolean;
 };
 
-function createTree(json: string) {
+function pathsListToTreeObject(json: string) {
     const hierarchicalObj: any = {};
 
     const data = JSON.parse(json);
+    console.log(data);
     for (const obj of data) {
         const pathArr = obj.path.split("/");
         let currentObj = hierarchicalObj;
@@ -29,19 +30,19 @@ function createTree(json: string) {
     return hierarchicalObj;
 }
 
-function sortTreeAlphabetically(treeObj: Object) {
-    const sortedTree: any = {};
-    const keys = Object.keys(treeObj).sort();
-    for (const key of keys) {
-        if (treeObj[key as keyof Object] instanceof Object) {
-            sortedTree[key] = sortTreeAlphabetically(
-                treeObj[key as keyof Object]
-            );
-        } else {
-            sortedTree[key] = treeObj[key as keyof Object];
+export function treeObjectToPathsList(obj: Object) {
+    const pathsList: string[] = [];
+    function traverseTree(obj: any, path: string = "") {
+        for (const key in obj) {
+            if (obj[key] instanceof Object) {
+                traverseTree(obj[key], path + key + "/");
+            } else {
+                pathsList.push(path + obj[key]);
+            }
         }
     }
-    return sortedTree;
+    traverseTree(obj);
+    return pathsList;
 }
 
 export function buildTree(treeObj: Object, config: TreeConfig) {
@@ -167,5 +168,5 @@ export async function fetchTree(url: string) {
         }
     }
     const tree = await getTree(owner as string, repo as string, sha as string);
-    return createTree(JSON.stringify(tree));
+    return pathsListToTreeObject(JSON.stringify(tree));
 }

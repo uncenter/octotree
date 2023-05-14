@@ -1,11 +1,30 @@
-import { For, Show } from "solid-js";
+import { For, Show, createSignal } from "solid-js";
 import { createRouteAction } from "solid-start/data";
-import { Button, Switch, TextField as Input } from "@kobalte/core";
+import {
+    Button,
+    Switch,
+    TextField as Input,
+    AlertDialog,
+    RadioGroup,
+} from "@kobalte/core";
 import { Page } from "~/components/Page";
+import { OcX2 } from "solid-icons/oc";
 
-import { fetchTree, buildTree } from "../tree";
+import { fetchTree, buildTree, treeObjectToPathsList } from "../tree";
 import { isServer } from "solid-js/web";
 import { createStore } from "solid-js/store";
+
+function downloadJson(data: string, filename: string) {
+    const blob = new Blob([data], {
+        type: "application/json",
+    });
+    const href = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(href);
+}
 
 const version = "1.1.0";
 const options = [
@@ -83,12 +102,7 @@ export default function App() {
         async (formData: FormData) =>
             await fetchTree(formData.get("url") as string)
     );
-
-    function handleOptionChange(e: Event) {
-        const { name, checked } = e.target as HTMLInputElement;
-        setState(name, checked);
-        storage.set(name, checked);
-    }
+    const [exportOption, setExportOption] = createSignal("Array of paths");
 
     return (
         <Page>
@@ -105,7 +119,7 @@ export default function App() {
                     />
                     <Input.Description class="text-sm text-gray-500 dark:text-gray-400 mt-4 break-words">
                         <details>
-                            <summary class="text-blue-500 cursor-pointer font-extrabold select-none text-center -ml-[0.4rem]">
+                            <summary class="text-blue-500 cursor-pointer font-extrabold select-none text-center -ml-[0.4rem] mb-2">
                                 Syntax Help
                             </summary>
                             <p class="text-center">
@@ -150,13 +164,19 @@ export default function App() {
             <div class="flex flex-row items-center gap-4 mt-6 justify-center flex-wrap">
                 <For each={options}>
                     {({ name, label, description, initial }) => (
-                        <Switch.Root class="swt" isChecked={state[name]}>
+                        <Switch.Root
+                            class="swt"
+                            checked={state[name]}
+                            onChange={(checked: boolean) => {
+                                setState(name, checked);
+                                storage.set(name, checked);
+                            }}
+                        >
                             <Switch.Label class="label">{label}</Switch.Label>
                             <Switch.Input
                                 type="checkbox"
                                 name={name}
                                 class="input"
-                                onClick={handleOptionChange}
                             />
                             <Switch.Control class="control">
                                 <Switch.Thumb class="thumb"></Switch.Thumb>
@@ -247,6 +267,129 @@ export default function App() {
                     </svg>
                 </Button.Root>
             </div>
+            <AlertDialog.Root>
+                <AlertDialog.Trigger
+                    class="btn outline purple mt-6 justify-center"
+                    disabled={tree.pending || tree.error || !tree.result}
+                >
+                    Export as JSON
+                </AlertDialog.Trigger>
+                <AlertDialog.Portal>
+                    <AlertDialog.Overlay class="alert-overlay" />
+                    <div class="alert-positioner">
+                        <AlertDialog.Content class="rounded-md bg-bg p-6">
+                            <div class="flex items-baseline justify-between mb-3">
+                                <AlertDialog.Title class="text-xl font-medium text-fg">
+                                    Export as JSON
+                                </AlertDialog.Title>
+                                <AlertDialog.CloseButton class="h-6 w-6 text-fg">
+                                    <OcX2 />
+                                </AlertDialog.CloseButton>
+                            </div>
+                            <AlertDialog.Description class="text-fg text-sm">
+                                <RadioGroup.Root
+                                    class="flex flex-col gap-2"
+                                    value={exportOption()}
+                                    onChange={setExportOption}
+                                >
+                                    <RadioGroup.Label class="text-sm font-medium text-gray-900 dark:text-gray-300">
+                                        Export as...
+                                    </RadioGroup.Label>
+                                    <div class="flex gap-4">
+                                        <For
+                                            each={[
+                                                "Array of paths",
+                                                "Nested tree object",
+                                            ]}
+                                        >
+                                            {(option) => (
+                                                <RadioGroup.Item
+                                                    value={option}
+                                                    class="flex items-center"
+                                                >
+                                                    <RadioGroup.ItemInput class="radio__input" />
+                                                    <RadioGroup.ItemControl class="flex items-center justify-center h-5 w-5 border border-zinc-300 bg-zinc-200 rounded-[10px] border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)]">
+                                                        <RadioGroup.ItemIndicator class="h-2.5 w-2.5 bg-[white] rounded-[5px]" />
+                                                    </RadioGroup.ItemControl>
+                                                    <RadioGroup.ItemLabel class="text-zinc-900 text-sm select-none ml-1.5">
+                                                        {option}
+                                                    </RadioGroup.ItemLabel>
+                                                </RadioGroup.Item>
+                                            )}
+                                        </For>
+                                    </div>
+                                </RadioGroup.Root>
+                                <div class="flex flex-row justify-center">
+                                    <Button.Root
+                                        class="btn outline purple mt-6 justify-center"
+                                        onClick={() => {
+                                            if (!tree.result || !exportOption())
+                                                return;
+                                            if (
+                                                exportOption() ===
+                                                "Array of paths"
+                                            ) {
+                                                downloadJson(
+                                                    JSON.stringify(
+                                                        treeObjectToPathsList(
+                                                            tree.result
+                                                        ),
+                                                        null,
+                                                        4
+                                                    ),
+                                                    "tree.json"
+                                                );
+                                            } else {
+                                                downloadJson(
+                                                    JSON.stringify(
+                                                        tree.result,
+                                                        null,
+                                                        4
+                                                    ),
+                                                    "tree.json"
+                                                );
+                                            }
+                                        }}
+                                    >
+                                        Download
+                                    </Button.Root>
+                                    <Button.Root
+                                        class="btn outline purple mt-6 justify-center"
+                                        onClick={() => {
+                                            if (!tree.result || !exportOption())
+                                                return;
+                                            if (
+                                                exportOption() ===
+                                                "Array of paths"
+                                            ) {
+                                                navigator.clipboard.writeText(
+                                                    JSON.stringify(
+                                                        treeObjectToPathsList(
+                                                            tree.result
+                                                        ),
+                                                        null,
+                                                        4
+                                                    )
+                                                );
+                                            } else {
+                                                navigator.clipboard.writeText(
+                                                    JSON.stringify(
+                                                        tree.result,
+                                                        null,
+                                                        4
+                                                    )
+                                                );
+                                            }
+                                        }}
+                                    >
+                                        Copy
+                                    </Button.Root>
+                                </div>
+                            </AlertDialog.Description>
+                        </AlertDialog.Content>
+                    </div>
+                </AlertDialog.Portal>
+            </AlertDialog.Root>
         </Page>
     );
 }
