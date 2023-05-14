@@ -8,7 +8,7 @@ import {
     RadioGroup,
 } from "@kobalte/core";
 import { Page } from "~/components/Page";
-import { OcX2 } from "solid-icons/oc";
+import { OcX2, OcDownload2 } from "solid-icons/oc";
 
 import { fetchTree, buildTree, flattenPaths } from "../tree";
 import { isServer } from "solid-js/web";
@@ -156,7 +156,7 @@ export default function App() {
                 </Input.Root>
                 <Button.Root
                     type="submit"
-                    class="btn pink outline blue mt-6 justify-center"
+                    class="purple solid mt-6 justify-center"
                 >
                     Get Tree
                 </Button.Root>
@@ -200,7 +200,7 @@ export default function App() {
             <div class="flex flex-row justify-center">
                 <Button.Root
                     aria-label="Copy tree to clipboard"
-                    class="btn outline blue mt-6 justify-center"
+                    class="outline blue mt-6 justify-center"
                     disabled={tree.pending || tree.error || !tree.result}
                     onClick={() => {
                         navigator.clipboard.writeText(
@@ -212,7 +212,7 @@ export default function App() {
                 </Button.Root>
                 <AlertDialog.Root>
                     <AlertDialog.Trigger
-                        class="btn outline yellow mt-6 justify-center"
+                        class="outline orange mt-6 justify-center"
                         disabled={tree.pending || tree.error || !tree.result}
                     >
                         Export JSON
@@ -261,7 +261,7 @@ export default function App() {
                                     </RadioGroup.Root>
                                     <div class="flex flex-row justify-center">
                                         <Button.Root
-                                            class="btn outline purple mt-6 justify-center"
+                                            class="solid dark mt-6 justify-center flex flex-row items-center"
                                             onClick={() => {
                                                 if (
                                                     !tree.result ||
@@ -294,10 +294,11 @@ export default function App() {
                                                 }
                                             }}
                                         >
-                                            Download
+                                            <span>Download</span>
+                                            <OcDownload2 class="ml-2" />
                                         </Button.Root>
                                         <Button.Root
-                                            class="btn outline purple mt-6 justify-center"
+                                            class="outline blue mt-6 justify-center"
                                             onClick={() => {
                                                 if (
                                                     !tree.result ||
