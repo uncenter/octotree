@@ -127,6 +127,16 @@ pre {
     color: #ffffff;
 }
 
+.btn.outline.pink {
+    color: #ec4899;
+    border-color: #ec4899;
+}
+
+.btn.outline.pink:hover:not([data-disabled]) {
+    background-color: #ce3f86;
+    color: #ffffff;
+}
+
 .btn.outline[data-disabled] {
     opacity: 0.5;
     cursor: not-allowed;
@@ -177,12 +187,20 @@ pre {
     background-color: #f59e0b;
 }
 
-.btn.solid.purpled {
+.btn.solid.purple {
     background-color: #6d28d9;
 }
 
 .btn.solid.purple:hover {
     background-color: #5b21b6;
+}
+
+.btn.solid.pink {
+    background-color: #ec4899;
+}
+
+.btn.solid.pink:hover {
+    background-color: #ce3f86;
 }
 
 .swt {
