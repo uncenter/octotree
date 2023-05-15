@@ -41,6 +41,12 @@ pre {
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .wrap-anywhere {
+        overflow-wrap: anywhere;
+    }
+}
+
 @layer components {
     a {
         @apply font-medium text-blue-600 dark:text-blue-500 hover:underline;

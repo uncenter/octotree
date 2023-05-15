@@ -117,12 +117,12 @@ export default function App() {
                         name="url"
                         placeholder="https://github.com/owner/repo or owner/repo"
                     />
-                    <Input.Description class="text-sm text-gray-500 dark:text-gray-400 mt-4 break-words">
+                    <Input.Description class="text-sm text-gray-500 dark:text-gray-400 mt-4 wrap-anywhere">
                         <details>
-                            <summary class="text-blue-500 cursor-pointer font-extrabold select-none text-center -ml-[0.4rem] mb-2">
-                                Syntax Help
+                            <summary class="text-blue-500 cursor-pointer font-extrabold select-none text-center -ml-[0.2rem]">
+                                Need help?
                             </summary>
-                            <p class="text-center">
+                            <p class="text-center mt-2">
                                 Octotree will try fetching the main and master
                                 branches if none is specified for both syntaxes.
                             </p>
@@ -156,7 +156,7 @@ export default function App() {
                 </Input.Root>
                 <Button.Root
                     type="submit"
-                    class="purple solid mt-6 justify-center"
+                    class="purple solid mt-3 justify-center"
                 >
                     Get Tree
                 </Button.Root>
@@ -212,10 +212,10 @@ export default function App() {
                 </Button.Root>
                 <AlertDialog.Root>
                     <AlertDialog.Trigger
-                        class="outline orange mt-6 justify-center"
+                        class="outline purple mt-6 justify-center"
                         disabled={tree.pending || tree.error || !tree.result}
                     >
-                        Export JSON
+                        Export
                     </AlertDialog.Trigger>
                     <AlertDialog.Portal>
                         <AlertDialog.Overlay class="alert-overlay" />
