@@ -113,7 +113,7 @@ export default function App() {
                     </Input.Label>
                     <Input.Input
                         type="text"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         name="url"
                         placeholder="https://github.com/owner/repo or owner/repo"
                     />
@@ -189,7 +189,9 @@ export default function App() {
                 <pre class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-[16em] overflow-scroll">
                     <Show when={!tree.pending} fallback={"Loading..."}>
                         <Show when={tree.error}>
-                            <p class="text-red-400">{tree.error.message}</p>
+                            <p class="text-red-500 dark:text-red-400 text-center mt-4 font-bold">
+                                {tree.error.message}
+                            </p>
                         </Show>
                         <Show when={tree.result && !tree.error}>
                             {buildTree(tree.result, state)}
