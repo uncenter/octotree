@@ -253,7 +253,7 @@ export default function App() {
                                                         <RadioGroup.ItemControl class="flex items-center justify-center h-5 w-5 border border-zinc-300 bg-zinc-200 rounded-[10px] border-solid data-[checked]:bg-[hsl(200_98%_39%)] data-[checked]:border-[hsl(200_98%_39%)]">
                                                             <RadioGroup.ItemIndicator class="h-2.5 w-2.5 bg-[white] rounded-[5px]" />
                                                         </RadioGroup.ItemControl>
-                                                        <RadioGroup.ItemLabel class="text-zinc-900 text-sm select-none ml-1.5">
+                                                        <RadioGroup.ItemLabel class="text-sm select-none ml-1.5">
                                                             {option}
                                                         </RadioGroup.ItemLabel>
                                                     </RadioGroup.Item>
