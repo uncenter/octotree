@@ -5,6 +5,12 @@
     <p>Easily convert Github repositories into their ASCII tree representations.</p>
 </div>
 
+## To-Do
+
+-   [ ] Allow for custom tree characters?
+-   [ ] Add API route for trees
+-   [ ] Provide a way to enter a GitHub token to increase rate limit
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
