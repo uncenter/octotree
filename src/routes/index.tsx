@@ -102,7 +102,7 @@ export default function App() {
         async (formData: FormData) =>
             await fetchTree(formData.get("url") as string)
     );
-    const [exportOption, setExportOption] = createSignal("Array of paths");
+    const [exportOption, setExportOption] = createSignal("Array of file paths");
 
     return (
         <Page>
@@ -217,7 +217,7 @@ export default function App() {
                         class="outline purple mt-6 justify-center"
                         disabled={tree.pending || tree.error || !tree.result}
                     >
-                        Export
+                        Copy JSON
                     </AlertDialog.Trigger>
                     <AlertDialog.Portal>
                         <AlertDialog.Overlay class="alert-overlay" />
@@ -225,7 +225,7 @@ export default function App() {
                             <AlertDialog.Content class="rounded-md bg-bg p-6">
                                 <div class="flex items-baseline justify-between mb-3">
                                     <AlertDialog.Title class="text-xl font-medium text-fg">
-                                        Export JSON as...
+                                        JSON Options
                                     </AlertDialog.Title>
                                     <AlertDialog.CloseButton class="h-6 w-6 text-fg">
                                         <OcX2 />
@@ -240,8 +240,8 @@ export default function App() {
                                         <div class="flex gap-4">
                                             <For
                                                 each={[
-                                                    "Array of paths",
-                                                    "Nested tree object",
+                                                    "Array of file paths",
+                                                    "Nested tree-like object",
                                                 ]}
                                             >
                                                 {(option) => (
@@ -263,7 +263,7 @@ export default function App() {
                                     </RadioGroup.Root>
                                     <div class="flex flex-row justify-center">
                                         <Button.Root
-                                            class="solid dark mt-6 justify-center flex flex-row items-center"
+                                            class="outline gray mt-6 justify-center flex flex-row items-center"
                                             onClick={() => {
                                                 if (
                                                     !tree.result ||
@@ -272,7 +272,7 @@ export default function App() {
                                                     return;
                                                 if (
                                                     exportOption() ===
-                                                    "Array of paths"
+                                                    "Array of file paths"
                                                 ) {
                                                     downloadJson(
                                                         JSON.stringify(
@@ -297,7 +297,7 @@ export default function App() {
                                             }}
                                         >
                                             <span>Download</span>
-                                            <OcDownload2 class="ml-2" />
+                                            <OcDownload2 class="ml-2 fill-current" />
                                         </Button.Root>
                                         <Button.Root
                                             class="outline blue mt-6 justify-center"
@@ -309,7 +309,7 @@ export default function App() {
                                                     return;
                                                 if (
                                                     exportOption() ===
-                                                    "Array of paths"
+                                                    "Array of file paths"
                                                 ) {
                                                     navigator.clipboard.writeText(
                                                         JSON.stringify(
