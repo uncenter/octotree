@@ -1,5 +1,5 @@
 // @refresh reload
-import { Suspense } from "solid-js";
+import { Suspense, createSignal } from "solid-js";
 import {
     Body,
     ErrorBoundary,
@@ -13,8 +13,22 @@ import {
     Title,
 } from "solid-start";
 import "./root.css";
+import { isServer } from "solid-js/web";
 
 export default function Root() {
+    const [isDark, setIsDark] = createSignal(
+        isServer
+            ? false
+            : window.matchMedia("(prefers-color-scheme: dark)").matches
+    );
+    if (!isServer) {
+        window
+            .matchMedia("(prefers-color-scheme: dark)")
+            .addEventListener("change", (e) => {
+                setIsDark(e.matches);
+            });
+    }
+
     return (
         <Html lang="en">
             <Head>
@@ -30,6 +44,10 @@ export default function Root() {
                     content="width=device-width, initial-scale=1"
                 />
                 <Meta name="color-scheme" content="light dark" />
+                <Meta
+                    name="theme-color"
+                    content={isDark() ? "#18181b" : "#ffffff"}
+                />
                 <Link rel="icon" type="image/png" href="favicon.png" />
                 <script
                     async
