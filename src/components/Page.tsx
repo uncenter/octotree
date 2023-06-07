@@ -11,9 +11,9 @@ export function Page({ children, footer = true }: PageProps) {
                 <header class="flex flex-row justify-around w-full mb-6">
                     <div class="flex flex-row items-center gap-4">
                         <img
-                            src="favicon.png"
-                            class="h-12 w-12"
-                            alt="Octotree Logo"
+                            src="logo.png"
+                            class="h-11 w-12"
+                            alt="Octotree logo"
                         />
                         <h1 class="text-3xl font-bold text-center">Octotree</h1>
                     </div>
@@ -27,7 +27,7 @@ export function Page({ children, footer = true }: PageProps) {
                             MIT licensed and{" "}
                             <a
                                 href="https://github.com/uncenter/octotree"
-                                class="mt-3 text-center text-blue-500"
+                                class="mt-3"
                             >
                                 open source on GitHub.
                             </a>

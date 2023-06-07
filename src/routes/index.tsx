@@ -119,7 +119,7 @@ export default function App() {
                     />
                     <Input.Description class="text-sm text-gray-500 dark:text-gray-400 mt-4 wrap-anywhere">
                         <details>
-                            <summary class="text-blue-500 cursor-pointer font-extrabold select-none text-center -ml-[0.2rem]">
+                            <summary class="text-blue-600 dark:text-blue-500 cursor-pointer font-extrabold select-none text-center -ml-[0.2rem]">
                                 Need help?
                             </summary>
                             <p class="text-center mt-2">

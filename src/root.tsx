@@ -48,7 +48,7 @@ export default function Root() {
                     name="theme-color"
                     content={isDark() ? "#18181b" : "#ffffff"}
                 />
-                <Link rel="icon" type="image/png" href="favicon.png" />
+                <Link rel="icon" type="image/png" href="logo.png" />
                 <script
                     async
                     defer
