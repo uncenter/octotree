@@ -11,7 +11,7 @@ export function Page({ children, footer = true }: PageProps) {
                 <header class="flex flex-row justify-around w-full mb-6">
                     <div class="flex flex-row items-center gap-4">
                         <img
-                            src="logo.png"
+                            src="logo.webp"
                             class="h-11 w-12"
                             alt="Octotree logo"
                         />
