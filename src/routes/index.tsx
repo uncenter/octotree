@@ -227,7 +227,7 @@ export default function App() {
                                     <AlertDialog.Title class="text-xl font-medium text-fg">
                                         JSON Options
                                     </AlertDialog.Title>
-                                    <AlertDialog.CloseButton class="h-6 w-6 text-fg">
+                                    <AlertDialog.CloseButton class="h-6 w-6 fill-fg">
                                         <OcX2 />
                                     </AlertDialog.CloseButton>
                                 </div>
