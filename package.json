@@ -1,5 +1,11 @@
 {
     "name": "octotree",
+    "author": "uncenter (https://uncenter.dev)",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/uncenter/octotree.git"
+    },
+    "license": "MIT",
     "scripts": {
         "dev": "solid-start dev",
         "build": "solid-start build",
@@ -7,27 +13,27 @@
     },
     "type": "module",
     "dependencies": {
-        "@kobalte/core": "^0.9.8",
-        "@kobalte/tailwindcss": "^0.6.5",
-        "@solidjs/meta": "^0.28.5",
-        "@solidjs/router": "^0.8.2",
-        "solid-icons": "^1.0.9",
-        "solid-js": "^1.7.7",
-        "solid-start": "^0.2.26",
-        "solid-start-vercel": "^0.2.26",
-        "undici": "^5.22.1"
+        "@kobalte/core": "^0.10.0",
+        "@kobalte/tailwindcss": "^0.7.0",
+        "@solidjs/meta": "^0.28.6",
+        "@solidjs/router": "^0.8.3",
+        "solid-icons": "^1.0.11",
+        "solid-js": "^1.7.11",
+        "solid-start": "^0.3.3",
+        "solid-start-vercel": "^0.3.3",
+        "undici": "^5.23.0"
     },
     "devDependencies": {
-        "autoprefixer": "^10.4.14",
-        "postcss": "^8.4.24",
-        "solid-start-node": "^0.2.26",
-        "tailwindcss": "^3.3.2",
+        "autoprefixer": "^10.4.15",
+        "postcss": "^8.4.28",
+        "solid-start-node": "^0.3.3",
+        "tailwindcss": "^3.3.3",
         "tailwindcss-logical": "^3.0.1",
         "typescript": "^5.1.6",
-        "vite": "^4.3.9"
+        "vite": "^4.4.9"
     },
     "engines": {
         "node": ">=18"
     },
-    "packageManager": "pnpm@8.6.6"
+    "packageManager": "pnpm@8.6.12"
 }
