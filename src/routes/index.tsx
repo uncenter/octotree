@@ -57,7 +57,7 @@ const options = [
 const storage = {
 	get(name: string) {
 		if (!isServer) {
-			const value = localStorage.getItem(`octotree:${name}`);
+			const value = localStorage.getItem(`${name}`);
 			return value;
 		} else {
 			return undefined;
@@ -66,7 +66,7 @@ const storage = {
 	set(name: string, value: any) {
 		if (!isServer) {
 			localStorage.setItem(
-				`octotree:${name}`,
+				`${name}`,
 				typeof value !== 'string' ? value.toString() : value,
 			);
 		}
@@ -81,25 +81,22 @@ export default function App() {
 		}
 	}
 	const [state, setState] = createStore(
-		options.reduce(
-			(acc, { name, initial }) => {
-				if (!isServer) {
-					const value = storage.get(name) === 'true';
-					if (value) {
-						acc[name] = value;
-						return acc;
-					} else {
-						storage.set(name, initial);
-						acc[name] = initial;
-						return acc;
-					}
+		options.reduce((acc, { name, initial }) => {
+			if (!isServer) {
+				const value = storage.get(name) === 'true';
+				if (value) {
+					acc[name] = value;
+					return acc;
 				} else {
-					acc[name] = false;
+					storage.set(name, initial);
+					acc[name] = initial;
 					return acc;
 				}
-			},
-			{} as Record<string, boolean>,
-		),
+			} else {
+				acc[name] = false;
+				return acc;
+			}
+		}, {} as Record<string, boolean>),
 	);
 	const [tree, { Form }] = createRouteAction(
 		async (formData: FormData) =>
