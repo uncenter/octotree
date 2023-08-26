@@ -1,40 +1,40 @@
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-        "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 @media (prefers-color-scheme: light) {
-    :root {
-        --bg: #fff;
-        --fg: #18181b;
-    }
+	:root {
+		--bg: #fff;
+		--fg: #18181b;
+	}
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #18181b;
-        --fg: #fff;
-    }
+	:root {
+		--bg: #18181b;
+		--fg: #fff;
+	}
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-        monospace;
-    background-color: #22272f;
-    border-radius: 0.3em;
-    color: #d8dee9;
-    padding: 0.1em 0.2em;
-    white-space: normal;
-    margin-left: 0.2em;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
+	background-color: #22272f;
+	border-radius: 0.3em;
+	color: #d8dee9;
+	padding: 0.1em 0.2em;
+	white-space: normal;
+	margin-left: 0.2em;
 }
 
 pre {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-        monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
 }
 
 @tailwind base;
@@ -42,281 +42,282 @@ pre {
 @tailwind utilities;
 
 @layer utilities {
-    .wrap-anywhere {
-        overflow-wrap: anywhere;
-    }
+	.wrap-anywhere {
+		overflow-wrap: anywhere;
+	}
 }
 
 @layer components {
-    a {
-        @apply font-medium text-blue-600 dark:text-blue-500 hover:underline;
-    }
+	a {
+		@apply font-medium text-blue-600 dark:text-blue-500 hover:underline;
+	}
 
-    button[data-disabled] {
-        @apply opacity-50 cursor-not-allowed;
-    }
+	button[data-disabled] {
+		@apply opacity-50 cursor-not-allowed;
+	}
 
-    button.solid.blue {
-        @apply text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600;
-    }
+	button.solid.blue {
+		@apply text-white bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600;
+	}
 
-    button.solid.blue:not([data-disabled]) {
-        @apply hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800;
-    }
+	button.solid.blue:not([data-disabled]) {
+		@apply hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800;
+	}
 
-    button.solid.gray {
-        @apply py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600;
-    }
+	button.solid.gray {
+		@apply py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600;
+	}
 
-    button.solid.gray:not([data-disabled]) {
-        @apply focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:hover:text-white dark:hover:bg-gray-700;
-    }
+	button.solid.gray:not([data-disabled]) {
+		@apply focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:hover:text-white dark:hover:bg-gray-700;
+	}
 
-    button.solid.dark {
-        @apply text-white bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:border-gray-700;
-    }
+	button.solid.dark {
+		@apply text-white bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:border-gray-700;
+	}
 
-    button.solid.dark:not([data-disabled]) {
-        @apply hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-700;
-    }
+	button.solid.dark:not([data-disabled]) {
+		@apply hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-700;
+	}
 
-    button.solid.light {
-        @apply text-gray-900 bg-white border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600;
-    }
+	button.solid.light {
+		@apply text-gray-900 bg-white border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600;
+	}
 
-    button.solid.light:not([data-disabled]) {
-        @apply focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700;
-    }
+	button.solid.light:not([data-disabled]) {
+		@apply focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700;
+	}
 
-    button.solid.green {
-        @apply text-white bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600;
-    }
+	button.solid.green {
+		@apply text-white bg-green-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600;
+	}
 
-    button.solid.green:not([data-disabled]) {
-        @apply focus:outline-none hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:hover:bg-green-700 dark:focus:ring-green-800;
-    }
+	button.solid.green:not([data-disabled]) {
+		@apply focus:outline-none hover:bg-green-800 focus:ring-4 focus:ring-green-300 dark:hover:bg-green-700 dark:focus:ring-green-800;
+	}
 
-    button.solid.red {
-        @apply text-white bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600;
-    }
+	button.solid.red {
+		@apply text-white bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600;
+	}
 
-    button.solid.red:not([data-disabled]) {
-        @apply focus:outline-none hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:hover:bg-red-700 dark:focus:ring-red-900;
-    }
+	button.solid.red:not([data-disabled]) {
+		@apply focus:outline-none hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:hover:bg-red-700 dark:focus:ring-red-900;
+	}
 
-    button.solid.orange {
-        @apply text-white bg-orange-400 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2;
-    }
+	button.solid.orange {
+		@apply text-white bg-orange-400 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2;
+	}
 
-    button.solid.orange:not([data-disabled]) {
-        @apply focus:outline-none hover:bg-orange-500 focus:ring-4 focus:ring-orange-300 dark:focus:ring-orange-900;
-    }
+	button.solid.orange:not([data-disabled]) {
+		@apply focus:outline-none hover:bg-orange-500 focus:ring-4 focus:ring-orange-300 dark:focus:ring-orange-900;
+	}
 
-    button.solid.yellow {
-        @apply text-white bg-yellow-400 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2;
-    }
+	button.solid.yellow {
+		@apply text-white bg-yellow-400 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2;
+	}
 
-    button.solid.yellow:not([data-disabled]) {
-        @apply focus:outline-none hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900;
-    }
+	button.solid.yellow:not([data-disabled]) {
+		@apply focus:outline-none hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-900;
+	}
 
-    button.solid.purple {
-        @apply text-white bg-purple-700 font-medium rounded-lg text-sm px-5 py-2.5 mb-2;
-    }
+	button.solid.purple {
+		@apply text-white bg-purple-700 font-medium rounded-lg text-sm px-5 py-2.5 mb-2;
+	}
 
-    button.solid.purple:not([data-disabled]) {
-        @apply focus:outline-none hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900;
-    }
+	button.solid.purple:not([data-disabled]) {
+		@apply focus:outline-none hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900;
+	}
 
-    button.solid.pink {
-        @apply text-white bg-pink-700 font-medium rounded-lg text-sm px-5 py-2.5 mb-2;
-    }
+	button.solid.pink {
+		@apply text-white bg-pink-700 font-medium rounded-lg text-sm px-5 py-2.5 mb-2;
+	}
 
-    button.solid.pink:not([data-disabled]) {
-        @apply focus:outline-none hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-900;
-    }
+	button.solid.pink:not([data-disabled]) {
+		@apply focus:outline-none hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-900;
+	}
 
-    button.outline.blue {
-        @apply text-blue-700 border border-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500;
-    }
+	button.outline.blue {
+		@apply text-blue-700 border border-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500;
+	}
 
-    button.outline.blue:not([data-disabled]) {
-        @apply hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800;
-    }
+	button.outline.blue:not([data-disabled]) {
+		@apply hover:text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800;
+	}
 
-    button.outline.gray {
-        @apply text-gray-900 border border-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400;
-    }
+	button.outline.gray {
+		@apply text-gray-900 border border-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-gray-600 dark:text-gray-400;
+	}
 
-    button.outline.gray:not([data-disabled]) {
-        @apply hover:text-white hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800;
-    }
+	button.outline.gray:not([data-disabled]) {
+		@apply hover:text-white hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800;
+	}
 
-    button.outline.green {
-        @apply text-green-700 border border-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500;
-    }
+	button.outline.green {
+		@apply text-green-700 border border-green-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500;
+	}
 
-    button.outline.green:not([data-disabled]) {
-        @apply hover:text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800;
-    }
+	button.outline.green:not([data-disabled]) {
+		@apply hover:text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800;
+	}
 
-    button.outline.red {
-        @apply text-red-700 border border-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500;
-    }
+	button.outline.red {
+		@apply text-red-700 border border-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500;
+	}
 
-    button.outline.red:not([data-disabled]) {
-        @apply hover:text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900;
-    }
+	button.outline.red:not([data-disabled]) {
+		@apply hover:text-white hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900;
+	}
 
-    button.outline.orange {
-        @apply text-orange-400 border border-orange-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-orange-300 dark:text-orange-300;
-    }
+	button.outline.orange {
+		@apply text-orange-400 border border-orange-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-orange-300 dark:text-orange-300;
+	}
 
-    button.outline.orange:not([data-disabled]) {
-        @apply hover:text-white hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-900;
-    }
+	button.outline.orange:not([data-disabled]) {
+		@apply hover:text-white hover:bg-orange-500 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:hover:text-white dark:hover:bg-orange-400 dark:focus:ring-orange-900;
+	}
 
-    button.outline.yellow {
-        @apply text-yellow-400 border border-yellow-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-yellow-300 dark:text-yellow-300;
-    }
+	button.outline.yellow {
+		@apply text-yellow-400 border border-yellow-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-yellow-300 dark:text-yellow-300;
+	}
 
-    button.outline.yellow:not([data-disabled]) {
-        @apply hover:text-white hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900;
-    }
+	button.outline.yellow:not([data-disabled]) {
+		@apply hover:text-white hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900;
+	}
 
-    /* button.outline.purple {
+	/* button.outline.purple {
         @apply text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900;
     } */
-    button.outline.purple {
-        @apply text-purple-700 border border-purple-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-500 dark:text-purple-500;
-    }
+	button.outline.purple {
+		@apply text-purple-700 border border-purple-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-500 dark:text-purple-500;
+	}
 
-    button.outline.purple:not([data-disabled]) {
-        @apply hover:text-white hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900;
-    }
+	button.outline.purple:not([data-disabled]) {
+		@apply hover:text-white hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900;
+	}
 
-    button.outline.pink {
-        @apply text-pink-700 border border-pink-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-pink-500 dark:text-pink-500;
-    }
+	button.outline.pink {
+		@apply text-pink-700 border border-pink-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-pink-500 dark:text-pink-500;
+	}
 
-    button.outline.pink:not([data-disabled]) {
-        @apply hover:text-white hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 dark:hover:text-white dark:hover:bg-pink-600 dark:focus:ring-pink-900;
-    }
+	button.outline.pink:not([data-disabled]) {
+		@apply hover:text-white hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 dark:hover:text-white dark:hover:bg-pink-600 dark:focus:ring-pink-900;
+	}
 }
 
 .swt {
-    display: inline-flex;
-    align-items: center;
+	display: inline-flex;
+	align-items: center;
 }
 .swt .control {
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    height: 24px;
-    width: 44px;
-    border: 1px solid hsl(240, 1%, 68%);
-    border-radius: 12px;
-    padding: 0 2px;
-    background-color: hsl(240, 1%, 68%);
-    transition: 250ms background-color;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	height: 24px;
+	width: 44px;
+	border: 1px solid hsl(240, 1%, 68%);
+	border-radius: 12px;
+	padding: 0 2px;
+	background-color: hsl(240, 1%, 68%);
+	transition: 250ms background-color;
 }
 .swt .input:focus-visible + .swt .control {
-    outline: 2px solid hsl(200 98% 39%);
-    outline-offset: 2px;
+	outline: 2px solid hsl(200 98% 39%);
+	outline-offset: 2px;
 }
 .swt .control[data-checked] {
-    border-color: hsl(200 98% 39%);
-    background-color: hsl(200 98% 39%);
+	border-color: hsl(200 98% 39%);
+	background-color: hsl(200 98% 39%);
 }
 .swt .thumb {
-    height: 20px;
-    width: 20px;
-    border-radius: 10px;
-    background-color: white;
-    transition: 250ms transform;
-    transform: translateX(-1px);
+	height: 20px;
+	width: 20px;
+	border-radius: 10px;
+	background-color: white;
+	transition: 250ms transform;
+	transform: translateX(-1px);
 }
 .swt .thumb[data-checked] {
-    transform: translateX(calc(100% - 1px));
+	transform: translateX(calc(100% - 1px));
 }
 .swt .label {
-    margin-right: 6px;
-    font-size: 14px;
-    user-select: none;
+	margin-right: 6px;
+	font-size: 14px;
+	user-select: none;
 }
 
 .alert-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    background-color: rgb(0 0 0 / 0.2);
-    animation: overlayHide 250ms ease 100ms forwards;
+	position: fixed;
+	inset: 0;
+	z-index: 50;
+	background-color: rgb(0 0 0 / 0.2);
+	animation: overlayHide 250ms ease 100ms forwards;
 }
 
 .alert-overlay[data-expanded] {
-    animation: overlayShow 200ms ease;
+	animation: overlayShow 200ms ease;
 }
 
 .alert-positioner {
-    position: fixed;
-    inset: 0;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 3rem;
+	position: fixed;
+	inset: 0;
+	z-index: 50;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 3rem;
 }
 
 .alert-content {
-    z-index: 50;
-    max-width: min(calc(100vw - 16px), 500px);
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-        0 4px 6px -4px rgb(0 0 0 / 0.1);
-    animation: contentHide 300ms ease-in forwards;
+	z-index: 50;
+	max-width: min(calc(100vw - 16px), 500px);
+	box-shadow:
+		0 10px 15px -3px rgb(0 0 0 / 0.1),
+		0 4px 6px -4px rgb(0 0 0 / 0.1);
+	animation: contentHide 300ms ease-in forwards;
 }
 
 .alert-content[data-expanded] {
-    animation: contentShow 300ms ease-out;
+	animation: contentShow 300ms ease-out;
 }
 
 @keyframes overlayShow {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 @keyframes overlayHide {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
 }
 @keyframes contentShow {
-    from {
-        opacity: 0;
-        transform: scale(0.96);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+	from {
+		opacity: 0;
+		transform: scale(0.96);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 @keyframes contentHide {
-    from {
-        opacity: 1;
-        transform: scale(1);
-    }
-    to {
-        opacity: 0;
-        transform: scale(0.96);
-    }
+	from {
+		opacity: 1;
+		transform: scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: scale(0.96);
+	}
 }
 
 .radio__input:focus-visible + .radio__control {
-    outline: 2px solid hsl(200 98% 39%);
-    outline-offset: 2px;
+	outline: 2px solid hsl(200 98% 39%);
+	outline-offset: 2px;
 }
