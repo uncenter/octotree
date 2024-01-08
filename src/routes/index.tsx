@@ -203,7 +203,7 @@ export default function App() {
 						class="outline purple mt-6 justify-center"
 						disabled={tree.pending || tree.error || !tree.result}
 					>
-						Copy JSON
+						Export JSON
 					</AlertDialog.Trigger>
 					<AlertDialog.Portal>
 						<AlertDialog.Overlay class="alert-overlay" />
